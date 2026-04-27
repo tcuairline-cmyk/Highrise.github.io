@@ -2,329 +2,495 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>High-Rise Airlines</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>High-Rise Philippine Airlines</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-/* -------------------- BASE -------------------- */
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif;}
-body{background:#f7f9fc;color:#1b2b3a;padding:20px 10px;transition: background 0.3s, color 0.3s;}
-.hidden{display:none !important;}
-.container{max-width:1200px;margin:0 auto;background:#fff;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);padding:25px;animation:fadeSlideUp 0.8s ease-out;}
+body{
+margin:0;
+font-family:Arial;
+background:#0b3d2e;
+color:white;
+}
 
-/* -------------------- HEADER -------------------- */
+/* LOGIN SPLIT UI */
+.login-wrapper{
+display:flex;
+height:100vh;
+}
+
+.login-box{
+flex:1;
+background:#fff;
+color:#0b3d2e;
+padding:60px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.login-box h1{margin:0;}
+.sub{color:gray;font-size:14px;margin-bottom:20px;}
+
+.login-box input,
+.login-box select{
+padding:12px;
+margin:8px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+.remember{font-size:13px;margin:10px 0;}
+
+.login-btn{
+background:linear-gradient(90deg,#0b3d2e,#b8a200);
+color:white;
+padding:12px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.divider{text-align:center;margin:15px 0;color:gray;}
+
+.socials{display:flex;gap:10px;}
+.socials button{
+flex:1;padding:10px;border:1px solid #ccc;border-radius:8px;background:white;
+}
+
+/* RIGHT VISUAL */
+.login-visual{
+flex:1;
+background:linear-gradient(135deg,#0b3d2e,#145c44);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:40px;
+}
+
+.login-visual img{width:70%;max-width:400px;margin-top:20px;}
+
+/* APP */
+.hidden{display:none;}
+
 header{
-  position:relative;
-  background:url('https://source.unsplash.com/1600x300/?airplane,sky') no-repeat center center;
-  background-size:cover;
-  color:#fff;
-  padding:60px 20px;
-  text-align:center;
-  border-radius:15px;
-  margin-bottom:30px;
-  overflow:hidden;
+background:#b8a200;
+padding:15px;
+text-align:center;
+font-weight:bold;
+color:#0b3d2e;
+font-size:20px;
 }
-header::before{
-  content:'';
-  position:absolute;
-  top:0; left:0; right:0; bottom:0;
-  background:rgba(27,43,58,0.4);
-  z-index:0;
-  border-radius:15px;
-}
-header h1, header p{
-  position:relative;
-  z-index:1;
-  text-shadow:0 2px 6px rgba(0,0,0,0.3);
-}
-header h1{font-size:2.8rem;margin-bottom:8px;animation:fadeSlideDown 0.8s ease-out;}
-header p{font-size:1.3rem;animation:fadeSlideDown 1s ease-out;}
 
-/* -------------------- BUTTONS -------------------- */
+.container{padding:20px;}
+
+/* NAV */
+.nav{
+display:flex;
+gap:10px;
+background:#083224;
+padding:10px;
+flex-wrap:wrap;
+}
+
+.nav button{width:auto}
+
+/* CARDS */
+.card{
+background:#145c44;
+padding:15px;
+border-radius:10px;
+margin:10px 0;
+}
+
+/* BUTTON */
 button{
-  padding:12px;
-  background:#1b2b3a;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  width:100%;
-  margin-bottom:10px;
-  font-size:1rem;
-  transition:0.3s all;
-}
-button:hover{background:#0f1a28;transform:translateY(-2px);}
-
-/* -------------------- INPUTS -------------------- */
-input, select{
-  padding:12px;
-  margin-bottom:10px;
-  width:100%;
-  border-radius:8px;
-  border:1px solid #ccc;
-  transition:0.3s all;
-}
-input:focus, select:focus{border-color:#1b2b3a;outline:none;}
-
-/* -------------------- FLIGHT CARDS -------------------- */
-.flight-recommendations{margin-bottom:40px;animation:fadeSlideUp 0.6s ease-out;}
-.flights-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:20px;
-}
-.flight-card{
-  background:#fff;
-  border-radius:15px;
-  box-shadow:0 6px 25px rgba(0,0,0,0.08);
-  cursor:pointer;
-  overflow:hidden;
-  transition:transform 0.3s, box-shadow 0.3s;
-  display:flex;
-  flex-direction:column;
-  animation:fadeSlideUp 0.5s ease-out;
-}
-.flight-card:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 10px 30px rgba(0,0,0,0.15);}
-.flight-card img{width:100%;height:160px;object-fit:cover;border-bottom:4px solid #1b2b3a;}
-.flight-info{padding:15px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;}
-.flight-info .origin{font-size:0.9rem;color:#6b7a8f;margin-bottom:6px;}
-.flight-info .destination{font-weight:700;font-size:1.2rem;color:#1b2b3a;margin-bottom:8px;}
-.flight-info .price{font-weight:600;color:#ffb400;font-size:1rem;}
-
-/* -------------------- SECTIONS -------------------- */
-#detailedBooking,#seatSection,#paymentSection,#ticketSection,#historySection,#adminPanel,#allFlightsSection{
-  background:#fff;
-  border-radius:15px;
-  padding:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-  margin-top:20px;
-  animation:fadeSlideUp 0.5s ease-out;
+padding:10px;
+margin:5px 0;
+width:100%;
+border:none;
+border-radius:5px;
+background:#b8a200;
+color:#0b3d2e;
+font-weight:bold;
+cursor:pointer;
 }
 
-/* -------------------- SEAT MAP -------------------- */
-#seatMap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:15px;}
+/* SEATS */
+.seat-grid{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:5px;
+}
+
 .seat{
-  padding:14px;
-  text-align:center;
-  background:#e0e4eb;
-  cursor:pointer;
-  border-radius:10px;
-  font-weight:600;
-  transition:0.3s all;
+background:#1f7a5a;
+padding:10px;
+text-align:center;
+cursor:pointer;
+border-radius:5px;
 }
-.seat.selected{background:#1b2b3a;color:#ffb400;transform:scale(1.1);}
-.seat.occupied{background:#c76c6c;color:#fff;cursor:not-allowed;opacity:0.7;}
 
-/* -------------------- FLIGHT SELECT -------------------- */
-.flight-select{
-  padding:12px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  transition:0.3s all;
+.seat.selected{
+background:#b8a200;
 }
-.flight-select:hover{background:#f0f4f8;transform:translateY(-2px);}
-.flight-select button{width:auto;padding:6px 12px;font-size:0.9rem;background:#1b2b3a;color:#ffb400;}
-.flight-select button:hover{background:#0f1a28;}
 
-/* -------------------- ANIMATIONS -------------------- */
-@keyframes fadeSlideUp{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
-@keyframes fadeSlideDown{0%{opacity:0;transform:translateY(-20px);}100%{opacity:1;transform:translateY(0);}}
+/* TICKET */
+.ticket{
+background:#fff;
+color:#000;
+padding:20px;
+border-radius:10px;
+}
+
+/* =========================
+   ✈ FEATURED PLACES (NEW)
+========================= */
+.featured-title{
+margin-top:30px;
+font-size:22px;
+font-weight:bold;
+}
+
+.featured-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:10px;
+}
+
+.place{
+height:180px;
+border-radius:12px;
+display:flex;
+align-items:flex-end;
+padding:15px;
+background-size:cover;
+background-position:center;
+position:relative;
+overflow:hidden;
+}
+
+.place::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.35);
+}
+
+.place h3{
+position:relative;
+margin:0;
+}
+
+/* =========================
+   📌 ABOUT / INFO SCROLL
+========================= */
+.about-scroll{
+display:flex;
+gap:15px;
+overflow-x:auto;
+padding:10px 0;
+}
+
+.about-card{
+min-width:250px;
+background:#0f4a36;
+padding:15px;
+border-radius:12px;
+flex-shrink:0;
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+@media(max-width:900px){
+.login-wrapper{flex-direction:column;}
+
+.featured-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+.featured-grid{
+grid-template-columns:1fr;
+}
+}
 </style>
 </head>
+
 <body>
 
-<header>
-  <h1>High-Rise Philippine Airlines</h1>
-  <p>Elevate Every Journey </p>
-</header>
+<!-- LOGIN -->
+<div id="loginPage" class="login-wrapper">
 
-<div class="container">
+  <div class="login-box">
+    <h1>Welcome to High-Rise Airlines</h1>
+    <p class="sub">Login to continue booking your flights</p>
 
-<!-- AUTH -->
-<div id="authSection">
-<h2>User Login / Register</h2>
-<input id="username" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
-<button onclick="register()">Register</button>
-<button onclick="login()">Login</button>
-<hr>
-<h2>Admin Login</h2>
-<input id="adminPass" type="password" placeholder="Admin Password">
-<button onclick="adminLogin()">Admin Login</button>
+    <select id="role">
+      <option value="customer">Customer</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <input id="email" placeholder="Enter Email">
+    <input id="password" type="password" placeholder="Enter Password">
+
+    <div class="remember">
+      <input type="checkbox"> Remember Me
+    </div>
+
+    <button class="login-btn" onclick="login()">SIGN IN</button>
+
+    <div class="divider">or continue with</div>
+
+    <div class="socials">
+      <button>Facebook</button>
+      <button>Google</button>
+    </div>
+  </div>
+
+  <div class="login-visual">
+    <h2>HIGH-RISE AIRLINES</h2>
+    <p>Fly smarter. Travel better.</p>
+    <img src="https://illustrations.popsy.co/gray/digital-nomad.svg">
+  </div>
+
 </div>
 
-<!-- USER PROFILE -->
-<div id="profileSection" class="hidden">
-<h2>Welcome, <span id="profileName"></span></h2>
-<button onclick="showHistory()">Booking History</button>
-<button onclick="showAllFlights()">Select Scheduled Flights</button>
+<!-- CUSTOMER -->
+<div id="customerPage" class="hidden">
+
+<header>✈ HIGH-RISE AIRLINES</header>
+
+<div class="nav">
+<button onclick="showTab('book')">Book</button>
+<button onclick="showTab('manage')">My Bookings</button>
 <button onclick="logout()">Logout</button>
 </div>
 
-<!-- FEATURED FLIGHTS -->
-<section class="flight-recommendations hidden" id="flightRecommendations">
-<h2>Featured Flight Recommendations</h2>
-<div class="flights-grid" id="flightsGrid"></div>
-</section>
+<div class="container">
 
-<!-- ALL FLIGHTS -->
-<section id="allFlightsSection" class="hidden">
-<h2>Scheduled Flights</h2>
-<label>Filter by Destination:</label>
-<select id="destinationFilter" onchange="renderAllFlights()">
-  <option value="">All</option>
+<!-- BOOK -->
+<div id="book" class="card">
+
+<h3>Search Flight</h3>
+
+<select id="destination">
+<option>Boracay</option>
+<option>Cebu</option>
+<option>Coron</option>
+<option>Seattle</option>
+<option>Tokyo</option>
+<option>Thailand</option>
 </select>
-<label>Choose Desired Date:</label>
-<input type="date" id="desiredDate" onchange="renderAllFlights()">
-<label>Choose Desired Time:</label>
-<input type="time" id="desiredTime" onchange="renderAllFlights()">
-<div id="allFlightsGrid"></div>
-<button onclick="backToRecommendations()">⬅️ Back</button>
-</section>
 
-<!-- DETAILED BOOKING -->
-<section id="detailedBooking" class="hidden">
-<h2>Book Your Flight</h2>
-<p><strong>Route:</strong> <span id="bookingRoute"></span></p>
-<p><strong>Date & Time:</strong> <span id="bookingDateTime"></span></p>
-<p><strong>Price:</strong> ₱<span id="bookingPrice"></span></p>
-<label>Passengers</label>
-<input type="number" id="passengersInput" value="1" min="1">
-<label>Class</label>
-<select id="classSelect">
-<option value="1">Economy</option>
-<option value="1.5">Business (+50%)</option>
-<option value="2">First Class (x2)</option>
-</select>
-<button id="bookFlightBtn">✈️ Book This Flight</button>
-<button onclick="hideDetailedBooking()" style="background:#aaa;margin-top:10px;">⬅️ Back</button>
-</section>
+<input id="date" type="date">
+<input id="passengers" type="number" placeholder="Passengers">
 
-<!-- SEAT SELECTION -->
-<div id="seatSection" class="hidden">
-<h2>Select Seat</h2>
-<div id="seatMap"></div>
-<button onclick="proceedPayment()">💳 Proceed to Payment</button>
-<button onclick="backToBooking()">⬅️ Back</button>
+<button onclick="searchFlight()">Search</button>
+
+<div id="flightResult"></div>
+
+</div>
+
+<!-- ✈ FEATURED PLACES (NEW UI LIKE IMAGE) -->
+<div class="featured-title">Main Featured Places</div>
+
+<div class="featured-grid">
+
+<div class="place" style="background-image:url('PASTE-BORACAY-IMAGE-LINK');">
+<h3>BORACAY</h3>
+</div>
+
+<div class="place" style="background-image:url('PASTE-CEBU-IMAGE-LINK');">
+<h3>CEBU</h3>
+</div>
+
+<div class="place" style="background-image:url('PASTE-CORON-IMAGE-LINK');">
+<h3>CORON</h3>
+</div>
+
+<div class="place" style="background-image:url('PASTE-SEATTLE-IMAGE-LINK');">
+<h3>SEATTLE</h3>
+</div>
+
+<div class="place" style="background-image:url('PASTE-TOKYO-IMAGE-LINK');">
+<h3>TOKYO</h3>
+</div>
+
+<div class="place" style="background-image:url('PASTE-THAILAND-IMAGE-LINK');">
+<h3>THAILAND</h3>
+</div>
+
+</div>
+
+<!-- ABOUT SCROLL SECTION (NEW) -->
+<div class="featured-title">About & Info</div>
+
+<div class="about-scroll">
+
+<div class="about-card">
+<h4>Contact Us</h4>
+<p>24/7 airline support system.</p>
+</div>
+
+<div class="about-card">
+<h4>Flight Status</h4>
+<p>Real-time flight tracking updates.</p>
+</div>
+
+<div class="about-card">
+<h4>Manage Booking</h4>
+<p>Edit or cancel your flights anytime.</p>
+</div>
+
+<div class="about-card">
+<h4>Promos</h4>
+<p>Exclusive discounts for members.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPage" class="hidden">
+<header>ADMIN DASHBOARD</header>
+<div class="container">
+<div class="card">
+<p>Total Bookings: <span id="totalBookings"></span></p>
+<p>Total Users: <span id="totalUsers"></span></p>
+</div>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+
+<!-- SEATS -->
+<div id="seatPage" class="hidden container">
+<h3>Select Seat</h3>
+<div class="seat-grid" id="seatGrid"></div>
+<button onclick="goPayment()">Continue</button>
 </div>
 
 <!-- PAYMENT -->
-<div id="paymentSection" class="hidden">
-<h2>Payment</h2>
-<select id="paymentMethod">
-<option>Credit/Debit Card</option>
-<option>GCash</option>
-</select>
-<button onclick="confirmBookingFlow()">Pay Now</button>
-<button onclick="backToSeat()">⬅️ Back</button>
+<div id="paymentPage" class="hidden container card">
+<h3>GCash Payment</h3>
+<p>Amount: ₱<span id="amount"></span></p>
+<input placeholder="GCash Number">
+<button onclick="confirmPayment()">Pay</button>
 </div>
 
 <!-- TICKET -->
-<div id="ticketSection" class="hidden"></div>
-
-<!-- HISTORY -->
-<div id="historySection" class="hidden">
-<h2>Your Bookings</h2>
-<div id="historyList"></div>
-<button onclick="backHome()">⬅️ Back</button>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="adminPanel" class="hidden">
-<h2>Admin Panel</h2>
-<div>
-<h3>Add Flight</h3>
-<input id="adminFrom" placeholder="From">
-<input id="adminTo" placeholder="To">
-<input id="adminTime" placeholder="Time (HH:MM)">
-<input id="adminPrice" placeholder="Price">
-<button onclick="addFlight()">Add Flight</button>
-</div>
-<div>
-<h3>All Bookings</h3>
-<div id="adminBookings"></div>
-</div>
-<div>
-<h3>Total Revenue</h3>
-<div id="revenueBox"></div>
-</div>
-<button onclick="logout()">Exit Admin</button>
-</div>
-
+<div id="ticketPage" class="hidden container ticket">
+<h2>BOARDING PASS</h2>
+<div id="ticketInfo"></div>
+<button onclick="window.print()">Print</button>
 </div>
 
 <script>
-// ------------------- DATA -------------------
-const destinations=["Boracay","Palawan","Batanes","Bohol","Cebu","Davao","Siargao Island","Camiguin Island","Bicol","Negros Island","Manila","Iloilo","Cagayan de Oro","Butuan","Leyte","Marinduque","Zamboanga","Laoag"];
-let flights=JSON.parse(localStorage.getItem("flights"))||[];
-let currentUser=null,selectedFlight=null,selectedSeat=null;
+let currentUser;
+let selectedFlight;
+let selectedSeat;
+let bookings = JSON.parse(localStorage.getItem("bookings")||"[]");
+let users = JSON.parse(localStorage.getItem("users")||"[]");
 
-// INIT FLIGHTS
-if(flights.length===0){
-    let id=1;
-    for(let i=0;i<destinations.length;i++){
-        for(let j=i+1;j<destinations.length;j++){
-            flights.push({id:id++,from:destinations[i],to:destinations[j],time:"09:00",date:"2026-03-10",price:Math.floor(Math.random()*4000+1000)});
-        }
-    }
-    localStorage.setItem("flights",JSON.stringify(flights));
+function login(){
+let role=document.getElementById("role").value;
+let email=document.getElementById("email").value;
+
+currentUser={role,email};
+
+users.push(email);
+localStorage.setItem("users",JSON.stringify(users));
+
+document.getElementById("loginPage").classList.add("hidden");
+
+if(role==="admin"){
+document.getElementById("adminPage").classList.remove("hidden");
+loadAdmin();
+}else{
+document.getElementById("customerPage").classList.remove("hidden");
+}
 }
 
-// ------------------- AUTH -------------------
-function register(){const u=document.getElementById("username").value.trim();const p=document.getElementById("password").value;let users=JSON.parse(localStorage.getItem("users"))||[];if(users.find(x=>x.username===u)){alert("User exists");return;}users.push({username:u,password:p});localStorage.setItem("users",JSON.stringify(users));alert("Registered! Login now.");}
-function login(){const u=document.getElementById("username").value.trim();const p=document.getElementById("password").value;let users=JSON.parse(localStorage.getItem("users"))||[];let user=users.find(x=>x.username===u&&x.password===p);if(!user){alert("Invalid credentials");return;}currentUser=user;document.getElementById("profileName").innerText=u;hideAllSections();document.getElementById("profileSection").classList.remove("hidden");document.getElementById("flightRecommendations").classList.remove("hidden");renderFlightRecommendations();renderDestinationFilter();}
-function logout(){if(currentUser && !confirm("Are you sure you want to logout?")) return;currentUser=null;selectedFlight=null;selectedSeat=null;hideAllSections();document.getElementById("authSection").classList.remove("hidden");}
-function hideAllSections(){["authSection","profileSection","flightRecommendations","detailedBooking","seatSection","paymentSection","ticketSection","historySection","allFlightsSection","adminPanel"].forEach(id=>document.getElementById(id).classList.add("hidden"));}
+function logout(){location.reload();}
 
-// ------------------- FLIGHT RECOMMENDATIONS -------------------
-function renderFlightRecommendations(){const grid=document.getElementById("flightsGrid");grid.innerHTML="";flights.slice(0,8).forEach(f=>{const card=document.createElement("div");card.className="flight-card";card.innerHTML=`<img src="https://source.unsplash.com/400x160/?${f.to.toLowerCase().replace(/\s/g,'')},city"><div class="flight-info"><div class="origin">${f.from}</div><div class="destination">${f.to}</div><div class="price">₱${f.price}</div></div>`;card.onclick=()=>openDetailedBooking(f);grid.appendChild(card);});}
-
-// ------------------- ALL FLIGHTS -------------------
-function showAllFlights(){hideAllSections();document.getElementById("allFlightsSection").classList.remove("hidden");renderAllFlights();}
-function renderDestinationFilter(){const filter=document.getElementById("destinationFilter");destinations.forEach(d=>{const opt=document.createElement("option");opt.value=d;opt.innerText=d;filter.appendChild(opt);});}
-function renderAllFlights(){
-    const dest=document.getElementById("destinationFilter").value;
-    const desiredDate=document.getElementById("desiredDate").value;
-    const desiredTime=document.getElementById("desiredTime").value;
-    const grid=document.getElementById("allFlightsGrid");grid.innerHTML="";
-    let filtered=flights.filter(f=>
-        (!dest||f.to===dest) &&
-        (!desiredDate||f.date===desiredDate) &&
-        (!desiredTime||f.time===desiredTime)
-    );
-    if(filtered.length===0){
-        grid.innerHTML="<p>No flights found at your desired date/time. Closest flights:</p>";
-        const desiredDateTime=new Date(`${desiredDate||Date.now()}T${desiredTime||"09:00"}`);
-        const closest=flights.sort((a,b)=>Math.abs(new Date(a.date+"T"+a.time)-desiredDateTime)-Math.abs(new Date(b.date+"T"+b.time)-desiredDateTime)).slice(0,5);
-        closest.forEach(f=>grid.appendChild(createFlightDiv(f)));
-    } else {filtered.forEach(f=>grid.appendChild(createFlightDiv(f)));}
+function showTab(tab){
+document.getElementById("book").classList.remove("hidden");
+document.getElementById("manage").classList.add("hidden");
 }
-function createFlightDiv(f){const div=document.createElement("div");div.className="flight-select";div.innerHTML=`<span>${f.from} → ${f.to} | ${f.date} ${f.time} | ₱${f.price}</span><button onclick='openDetailedBooking(${JSON.stringify(f)})'>Book</button>`;return div;}
-function backToRecommendations(){hideAllSections();document.getElementById("profileSection").classList.remove("hidden");document.getElementById("flightRecommendations").classList.remove("hidden");}
 
-// ------------------- BOOKING FLOW -------------------
-function openDetailedBooking(f){selectedFlight=f;document.getElementById("bookingRoute").innerText=`${f.from} → ${f.to}`;document.getElementById("bookingDateTime").innerText=`${f.date} | ${f.time}`;document.getElementById("bookingPrice").innerText=f.price;document.getElementById("passengersInput").value=1;document.getElementById("classSelect").value="1";hideAllSections();document.getElementById("detailedBooking").classList.remove("hidden");}
-function hideDetailedBooking(){selectedFlight=null;hideAllSections();document.getElementById("profileSection").classList.remove("hidden");document.getElementById("flightRecommendations").classList.remove("hidden");}
-document.getElementById("bookFlightBtn").onclick=()=>{if(!selectedFlight){alert("Select flight");return;}generateSeats();hideAllSections();document.getElementById("seatSection").classList.remove("hidden");};
-function generateSeats(){const seatMap=document.getElementById("seatMap");seatMap.innerHTML="";selectedSeat=null;const letters=["A","B","C","D","E","F"];const bookings=JSON.parse(localStorage.getItem("bookings"))||[];const occupied=bookings.filter(b=>b.flightId===selectedFlight.id).map(b=>b.seat);for(let r=1;r<=5;r++){for(let c=0;c<6;c++){const seat=r+letters[c];const div=document.createElement("div");div.className="seat";div.innerText=seat;if(occupied.includes(seat))div.classList.add("occupied");div.onclick=()=>{if(div.classList.contains("occupied"))return;document.querySelectorAll(".seat").forEach(s=>s.classList.remove("selected"));div.classList.add("selected");selectedSeat=seat;};seatMap.appendChild(div);}}}
-function proceedPayment(){if(!selectedSeat){alert("Select seat");return;}hideAllSections();document.getElementById("paymentSection").classList.remove("hidden");}
-function backToBooking(){hideAllSections();document.getElementById("detailedBooking").classList.remove("hidden");}
-function backToSeat(){hideAllSections();document.getElementById("seatSection").classList.remove("hidden");}
-function confirmBookingFlow(){if(!confirm("Confirm and pay for this booking?")) return;const bookings=JSON.parse(localStorage.getItem("bookings"))||[];const ref="HR"+Math.floor(Math.random()*1000000);const multiplier=parseFloat(document.getElementById("classSelect").value);const passengers=parseInt(document.getElementById("passengersInput").value)||1;const booking={user:currentUser.username,flightId:selectedFlight.id,route:selectedFlight.from+" → "+selectedFlight.to,time:selectedFlight.time,seat:selectedSeat,amount:selectedFlight.price*multiplier*passengers,reference:ref,date:selectedFlight.date};bookings.push(booking);localStorage.setItem("bookings",JSON.stringify(bookings));document.getElementById("ticketSection").innerHTML=`<h3>E-Ticket</h3>Ref: ${ref}<br>Passenger: ${booking.user}<br>Route: ${booking.route}<br>Date: ${booking.date}<br>Seat: ${booking.seat}<br>Amount: ₱${booking.amount}<br>Status: PAID<br><button onclick="window.print()">Print/Save PDF</button>`;hideAllSections();document.getElementById("ticketSection").classList.remove("hidden");}
+function searchFlight(){
+let dest=document.getElementById("destination").value;
+let date=document.getElementById("date").value;
+let pax=document.getElementById("passengers").value;
 
-// ------------------- HISTORY -------------------
-function showHistory(){hideAllSections();document.getElementById("historySection").classList.remove("hidden");const bookings=JSON.parse(localStorage.getItem("bookings"))||[];const userBookings=bookings.filter(b=>b.user===currentUser.username);const list=document.getElementById("historyList");list.innerHTML="";if(userBookings.length===0){list.innerHTML="<p>No bookings yet.</p>";}else{userBookings.forEach(b=>{list.innerHTML+=`<div>${b.reference} | ${b.route} | Seat: ${b.seat} | ₱${b.amount} <button onclick="cancelBooking('${b.reference}')">Cancel</button></div>`;});}}
-function cancelBooking(ref){if(!confirm("Cancel this booking?")) return;let bookings=JSON.parse(localStorage.getItem("bookings"))||[];bookings=bookings.filter(b=>b.reference!==ref);localStorage.setItem("bookings",JSON.stringify(bookings));showHistory();}
-function backHome(){hideAllSections();document.getElementById("profileSection").classList.remove("hidden");document.getElementById("flightRecommendations").classList.remove("hidden");}
+selectedFlight={dest,date,pax,price:pax*4500};
 
-// ------------------- ADMIN -------------------
-function adminLogin(){const pass=document.getElementById("adminPass").value;if(pass!=="TCU_ADMIN"){alert("Wrong admin password");return;}hideAllSections();document.getElementById("adminPanel").classList.remove("hidden");renderAdminBookings();}
-function addFlight(){const from=document.getElementById("adminFrom").value;const to=document.getElementById("adminTo").value;const time=document.getElementById("adminTime").value;const price=parseInt(document.getElementById("adminPrice").value);if(!from||!to||!time||!price){alert("Fill all fields");return;}const id=Math.max(...flights.map(f=>f.id))+1;flights.push({id,from,to,time,date:"2026-03-10",price});localStorage.setItem("flights",JSON.stringify(flights));alert("Flight added");}
-function renderAdminBookings(){const box=document.getElementById("adminBookings");const bookings=JSON.parse(localStorage.getItem("bookings"))||[];box.innerHTML="";let total=0;bookings.forEach(b=>{box.innerHTML+=`<div>${b.reference} | ${b.user} | ${b.route} | Seat: ${b.seat} | ₱${b.amount}</div>`;total+=b.amount;});document.getElementById("revenueBox").innerText="₱"+total;}
+document.getElementById("flightResult").innerHTML=
+`<div class="card">
+<h4>${dest}</h4>
+<p>${date}</p>
+<p>₱${selectedFlight.price}</p>
+<button onclick="openSeats()">Select Seat</button>
+</div>`;
+}
+
+function openSeats(){
+document.getElementById("customerPage").classList.add("hidden");
+document.getElementById("seatPage").classList.remove("hidden");
+
+let grid=document.getElementById("seatGrid");
+grid.innerHTML="";
+
+for(let i=1;i<=30;i++){
+let s=document.createElement("div");
+s.className="seat";
+s.innerText="S"+i;
+s.onclick=()=>{selectedSeat=s.innerText;s.classList.toggle("selected");};
+grid.appendChild(s);
+}
+}
+
+function goPayment(){
+document.getElementById("seatPage").classList.add("hidden");
+document.getElementById("paymentPage").classList.remove("hidden");
+document.getElementById("amount").innerText=selectedFlight.price;
+}
+
+function confirmPayment(){
+let booking={
+user:currentUser.email,
+flight:selectedFlight,
+seat:selectedSeat
+};
+
+bookings.push(booking);
+localStorage.setItem("bookings",JSON.stringify(bookings));
+
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("ticketPage").classList.remove("hidden");
+
+document.getElementById("ticketInfo").innerHTML=
+`
+<p>${booking.flight.dest}</p>
+<p>${booking.flight.date}</p>
+<p>Seat: ${booking.seat}</p>
+<p>₱${booking.flight.price}</p>
+`;
+}
+
+function loadAdmin(){
+document.getElementById("totalBookings").innerText=bookings.length;
+document.getElementById("totalUsers").innerText=users.length;
+}
 </script>
 
 </body>
