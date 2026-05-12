@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQs - High-Rise Airlines</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#07141d;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:rgba(7,20,29,0.96);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+}
+
+.logo-main{
+    font-size:1.7rem;
+    font-weight:800;
+}
+
+.logo-sub{
+    color:#00c2ff;
+    font-size:1rem;
+    font-weight:600;
+}
+
+.main-nav{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:white;
+    padding:10px 18px;
+    border-radius:12px;
+    transition:0.3s ease;
+    font-weight:500;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:rgba(0,194,255,0.16);
+    color:#00c2ff;
+}
+
+.profile-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.2rem;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px 40px;
+}
+
+.hero h1{
+    font-size:4rem;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:#b6c7d2;
+    font-size:1.05rem;
+}
+
+/* SEARCH */
+
+.search-box{
+    max-width:700px;
+    margin:40px auto;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    padding:18px 25px;
+    border:none;
+    border-radius:18px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:1rem;
+    outline:none;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.search-box input::placeholder{
+    color:#8ea5b2;
+}
+
+/* FAQ */
+
+.faq-container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.category-title{
+    font-size:1.7rem;
+    margin:50px 0 20px;
+    color:#00c2ff;
+    font-weight:700;
+}
+
+.faq-item{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:22px;
+    margin-bottom:18px;
+    overflow:hidden;
+    transition:0.3s ease;
+}
+
+.faq-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+}
+
+.faq-question{
+    width:100%;
+    background:none;
+    border:none;
+    color:white;
+    padding:24px;
+    text-align:left;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:1rem;
+    font-weight:600;
+}
+
+.faq-question span{
+    color:#00c2ff;
+    font-size:1.4rem;
+}
+
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s ease;
+    padding:0 24px;
+}
+
+.faq-answer p{
+    padding-bottom:24px;
+    color:#b7c6cf;
+    line-height:1.8;
+}
+
+/* SUPPORT */
+
+.support-box{
+    margin:80px auto;
+    max-width:900px;
+    text-align:center;
+    background:linear-gradient(
+        135deg,
+        rgba(0,194,255,0.12),
+        rgba(0,124,240,0.08)
+    );
+    border:1px solid rgba(0,194,255,0.15);
+    border-radius:30px;
+    padding:60px 30px;
+}
+
+.support-box h2{
+    font-size:2.5rem;
+    margin-bottom:18px;
+}
+
+.support-box p{
+    color:#c7d7df;
+    margin-bottom:30px;
+}
+
+.support-btn{
+    display:inline-block;
+    padding:16px 32px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#00c2ff,#007cf0);
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    transition:0.3s ease;
+}
+
+.support-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(0,124,240,0.35);
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+    header{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+
+    .main-nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:2.7rem;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        <span class="logo-main">High-Rise</span>
+        <span class="logo-sub">Airlines</span>
+    </div>
+
+    <nav class="main-nav">
+
+        <a href="index.html" class="nav-item">
+            Book Flights
+        </a>
+
+
+
+        <a href="travel-info.html" class="nav-item">
+            Travel Information
+        </a>
+
+        <a href="about_us.html" class="nav-item">
+            About Us
+        </a>
+
+        <a href="contact.html" class="nav-item">
+            Contact
+        </a>
+
+        <a href="faq.html" class="nav-item active">
+            FAQs
+        </a>
+
+    </nav>
+
+    <div class="profile-btn">
+        👤
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>Frequently Asked Questions</h1>
+
+    <p>
+        Find answers to common questions about bookings,
+        payments, baggage, and travel.
+    </p>
+
+</section>
+
+<div class="search-box">
+
+    <input type="text"
+           id="searchInput"
+           placeholder="Search FAQs..."
+           onkeyup="searchFAQ()">
+
+</div>
+
+<div class="faq-container">
+
+    <!-- BOOKING -->
+
+    <h2 class="category-title">Booking & Reservations</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            How do I book a flight?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                You can book flights directly through our website by selecting your destination, travel dates, and preferred cabin class.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Can I hold a reservation without paying immediately?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Yes. Selected flights may be reserved temporarily depending on seat availability and fare conditions.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            How do I know if my booking is confirmed?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                You will receive a confirmation email with your booking reference and flight details after payment is completed.
+            </p>
+        </div>
+    </div>
+
+    <!-- PAYMENTS -->
+
+    <h2 class="category-title">Payments</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            What payment methods are accepted?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                We accept Visa, Mastercard, GCash, PayPal, Maya, and major online banking services.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Is it safe to pay online?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Yes. Our payment system uses encrypted and secure payment gateways to protect your information.
+            </p>
+        </div>
+    </div>
+
+    <!-- BAGGAGE -->
+
+    <h2 class="category-title">Baggage</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            What is the baggage allowance?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Economy passengers receive 7kg carry-on baggage and checked baggage allowances vary by ticket type.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Can I purchase extra baggage?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Yes. Extra baggage can be purchased online before departure for lower rates.
+            </p>
+        </div>
+    </div>
+
+    <!-- CHECK-IN -->
+
+    <h2 class="category-title">Check-in</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            When can I check in online?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Online check-in opens 24 hours before departure and closes 1 hour before takeoff.
+            </p>
+        </div>
+    </div>
+
+    <!-- CHANGES -->
+
+    <h2 class="category-title">Changes & Cancellations</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Can I change my flight after booking?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Flight changes are allowed depending on your fare type and seat availability.
+            </p>
+        </div>
+    </div>
+
+    <!-- ACCOUNT -->
+
+    <h2 class="category-title">Account & Login</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            I forgot my password. What should I do?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Use the “Forgot Password” option on the login page to reset your account password securely.
+            </p>
+        </div>
+    </div>
+
+    <!-- SPECIAL -->
+
+    <h2 class="category-title">Special Services</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Can I request special assistance?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Yes. Please contact support at least 48 hours before your flight for assistance requests.
+            </p>
+        </div>
+    </div>
+
+    <!-- GENERAL -->
+
+    <h2 class="category-title">General Information</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            What documents do I need to travel?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                You must bring valid government-issued identification and required visas for international destinations.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            How early should I arrive at the airport?
+            <span>+</span>
+        </button>
+
+        <div class="faq-answer">
+            <p>
+                Arrive at least 2 hours before domestic flights and 3 hours before international departures.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="support-box">
+
+    <h2>Still need help?</h2>
+
+    <p>
+        Contact our support team for personalized assistance.
+    </p>
+
+    <a href="contact.html" class="support-btn">
+        Contact Us
+    </a>
+
+</div>
+
+<script>
+
+const questions = document.querySelectorAll(".faq-question");
+
+questions.forEach(question => {
+
+    question.addEventListener("click", () => {
+
+        const answer = question.nextElementSibling;
+
+        if(answer.style.maxHeight){
+
+            answer.style.maxHeight = null;
+
+        } else {
+
+            answer.style.maxHeight = answer.scrollHeight + "px";
+
+        }
+
+    });
+
+});
+
+function searchFAQ(){
+
+    let input = document.getElementById("searchInput").value.toLowerCase();
+
+    let items = document.querySelectorAll(".faq-item");
+
+    items.forEach(item => {
+
+        let text = item.innerText.toLowerCase();
+
+        if(text.includes(input)){
+
+            item.style.display = "block";
+
+        } else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

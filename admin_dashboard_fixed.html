@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>High-Rise Airlines - Admin Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    :root{ --font-base: 0.95rem; --border-radius: 12px; }
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:#07141d;
+      color:white;
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    .hidden{ display:none !important; }
+
+    .container{ max-width:1200px; margin:0 auto; padding:24px 3%; }
+
+    .card{
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:18px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .admin-table th{ background:#0c2433; padding:18px; text-align:left; font-weight:600; }
+    .admin-table td{ padding:18px; background: rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.08); }
+    .admin-table tr:hover td{ background: rgba(255,255,255,0.08); }
+
+    .premium-btn, button{
+      border:none;
+      border-radius:var(--border-radius);
+      background: linear-gradient(135deg, #00c2ff, #007cf0);
+      color:white;
+      padding:12px 18px;
+      font-weight:800;
+      font-size:0.95rem;
+      cursor:pointer;
+      transition:0.3s ease;
+      height:42px;
+    }
+    .premium-btn:hover, button:hover{ transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,124,240,0.3); }
+
+    .login-wrapper{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:80px;
+      padding:60px;
+      background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.7)),
+                  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop') center/cover;
+    }
+    .login-left{ max-width:550px; }
+    .premium-badge{
+      display:inline-block;
+      padding:10px 18px;
+      border-radius:999px;
+      background: rgba(0, 194, 255, 0.15);
+      color:#7ddfff;
+      border:1px solid rgba(0, 194, 255, 0.3);
+      font-size:0.9rem;
+      font-weight:600;
+      margin-bottom:25px;
+    }
+    .login-left h1{ font-size:5rem; line-height:1.05; margin-bottom:25px; font-weight:800; }
+    .login-left p{ font-size:1.2rem; line-height:1.8; color:#c5d4dc; margin-bottom:35px; }
+    .login-box{
+      width:430px;
+      background: rgba(10, 20, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(25px);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+    .login-top{ text-align:center; margin-bottom:30px; }
+    .airline-logo{
+      width:70px; height:70px; border-radius:20px;
+      background: linear-gradient(135deg, #00c2ff, #007cf0);
+      display:flex; justify-content:center; align-items:center;
+      margin:0 auto 20px; font-size:2rem;
+    }
+    .input-group{ margin-bottom:18px; }
+    .input-group label{ display:block; margin-bottom:8px; color:#dce7ec; font-size:0.95rem; font-weight:600; }
+    .input-group input{
+      width:100%;
+      background: rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.1);
+      color:white;
+      padding:14px 16px;
+      border-radius:14px;
+      outline:none;
+    }
+    .error-msg{
+      color:#ff6b6b;
+      font-size:0.85rem;
+      margin-top:5px;
+      padding:8px 12px;
+      background: rgba(255,107,107,0.15);
+      border-radius:8px;
+      display:none;
+    }
+
+    /* ADMIN LAYOUT */
+    .admin-shell{ display:flex; gap:22px; align-items:flex-start; min-height: calc(100vh - 120px); }
+    .admin-sidebar{
+      width: 280px;
+      position: sticky;
+      top: 24px;
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      overflow:hidden;
+    }
+    .admin-sidebar::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(135deg, rgba(0,194,255,0.55), rgba(255,184,0,0.35), rgba(0,194,255,0.2));
+      opacity:0.35;
+      filter: blur(14px);
+      pointer-events:none;
+    }
+    .admin-sidebar-inner{ position:relative; z-index:1; }
+    .sidebar-brand{ display:flex; align-items:center; gap:12px; margin-bottom:18px; padding: 10px 10px 16px 10px; border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .sidebar-logo{ width:46px; height:46px; border-radius: 16px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, #00c2ff, #007cf0); box-shadow: 0 10px 30px rgba(0,124,240,0.3); font-size: 1.25rem; }
+    .sidebar-brand h2{ margin:0; font-size: 1.1rem; letter-spacing: 0.2px; line-height: 1.2; }
+    .sidebar-brand p{ margin: 4px 0 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+    .sidebar-title{ font-size: 0.85rem; color: rgba(255,255,255,0.65); font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; margin: 14px 8px 10px 8px; }
+    .sidebar-menu{ display:flex; flex-direction: column; gap: 10px; padding: 0 6px 12px 6px; }
+    .sidebar-item{ display:flex; align-items:center; gap: 12px; padding: 12px 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); cursor:pointer; user-select:none; transition: 0.25s ease; font-weight: 800; color: rgba(255,255,255,0.92); }
+    .sidebar-item span.icon{ width: 30px; height: 30px; border-radius: 12px; display:flex; align-items:center; justify-content:center; background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.25); box-shadow: 0 10px 25px rgba(0,124,240,0.12); font-size: 0.95rem; }
+    .sidebar-item:hover{ transform: translateY(-2px); box-shadow: 0 14px 45px rgba(0,0,0,0.35); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.18); }
+    .sidebar-item.active{ background: linear-gradient(135deg, rgba(0,194,255,0.22), rgba(255,184,0,0.15)); border-color: rgba(0,194,255,0.35); box-shadow: 0 18px 55px rgba(0,124,240,0.18); }
+    .admin-main{ flex: 1; padding-right: 2px; min-width: 0; }
+    .sidebar-footer{ padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.10); margin-top: 8px; display:flex; gap: 10px; flex-direction: column; }
+    .logout-item{ background: rgba(245,101,101,0.10); border-color: rgba(245,101,101,0.25); }
+    .logout-item span.icon{ background: rgba(245,101,101,0.15); border-color: rgba(245,101,101,0.35); }
+
+    @media (max-width: 980px){
+      .admin-shell{ flex-direction: column; }
+      .admin-sidebar{ width:100%; position: relative; top:auto; }
+      .sidebar-menu{ flex-direction: row; flex-wrap: wrap; }
+      .sidebar-item{ flex: 1 1 calc(50% - 10px); justify-content: center; }
+    }
+
+    /* MODAL */
+    .modal-wrap{ position:fixed; inset:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:9999; }
+    .modal-box{ max-width:520px; width:92%; text-align:center; padding:30px; background:rgba(255,255,255,0.95); color:#07141d; border:1px solid rgba(255,255,255,0.2); border-radius: 16px; }
+    .modal-title{ margin-top:0; font-size:1.3rem; font-weight:900; }
+  </style>
+</head>
+<body>
+  <!-- ADMIN LOGIN PAGE -->
+  <div id="adminLoginPage" class="hidden login-wrapper">
+    <div class="login-left fade-up">
+      <div class="premium-badge" style="background: rgba(255, 184, 0, 0.2); color: #ffb800; border-color: rgba(255, 184, 0, 0.4);">🔧 Admin Portal</div>
+      <h1>Admin<br>Control Center</h1>
+      <p>Complete management dashboard for flight operations, bookings, and system administration.</p>
+      <div class="login-features" style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <div class="feature-item" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); padding:18px; border-radius:18px; backdrop-filter: blur(10px); font-weight:500;">✈️ Flight Management</div>
+        <div class="feature-item" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); padding:18px; border-radius:18px; backdrop-filter: blur(10px); font-weight:500;">👥 User Oversight</div>
+        <div class="feature-item" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); padding:18px; border-radius:18px; backdrop-filter: blur(10px); font-weight:500;">📊 Analytics Dashboard</div>
+        <div class="feature-item" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); padding:18px; border-radius:18px; backdrop-filter: blur(10px); font-weight:500;">⚙️ System Settings</div>
+      </div>
+    </div>
+
+    <div class="login-box fade-up">
+      <div class="login-top">
+        <div class="airline-logo" style="background: linear-gradient(135deg, #ffb800, #ff9500);">🔐</div>
+        <h2>Administrator Login</h2>
+        <p>Secure access to admin controls</p>
+      </div>
+
+      <div class="input-group">
+        <label>Admin Username</label>
+        <input type="text" id="adminUsername" placeholder="Enter username" />
+        <p id="adminUsernameError" class="error-msg"></p>
+      </div>
+
+      <div class="input-group">
+        <label>Admin Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter password" />
+        <p id="adminPasswordError" class="error-msg"></p>
+      </div>
+
+      <p id="adminLoginError" class="error-msg"></p>
+
+      <button class="premium-btn" id="adminLoginBtn" style="margin-bottom: 15px;" onclick="adminLogin()">🚀 Access Admin Panel</button>
+
+      <div style="text-align:center;">
+        <button class="premium-btn login-btn" style="width:100%; background: rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); height:46px;" onclick="window.location.href='index.html'">
+          ← Back to Customer Login
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL ADMIN PANEL DASHBOARD -->
+  <div id="adminPage" class="hidden">
+    <div class="container">
+      <div class="admin-shell">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar-inner">
+            <div class="sidebar-brand">
+              <div class="sidebar-logo">🔧</div>
+              <div>
+                <h2>Admin Control</h2>
+                <p>Premium dashboard navigation</p>
+              </div>
+            </div>
+
+            <div class="sidebar-title">Menu</div>
+            <div class="sidebar-menu" aria-label="Admin sidebar menu">
+              <div class="sidebar-item" id="side-dashboard" onclick="adminSidebarNav('dashboard')">
+                <span class="icon">🔥</span><span>🔥 Dashboard</span>
+              </div>
+              <div class="sidebar-item" id="side-flights" onclick="adminSidebarNav('flights')">
+                <span class="icon">✈️</span><span>✈️ Flight Management</span>
+              </div>
+              <div class="sidebar-item" id="side-bookings" onclick="adminSidebarNav('bookings')">
+                <span class="icon">📬</span><span>📬 Bookings</span>
+              </div>
+              <div class="sidebar-item" id="side-payments" onclick="adminSidebarNav('payments')">
+                <span class="icon">💳</span><span>💳 Payments</span>
+              </div>
+              <div class="sidebar-item" id="side-reports" onclick="adminSidebarNav('reports')">
+                <span class="icon">📊</span><span>📊 Reports</span>
+              </div>
+              <div class="sidebar-item" id="side-settings" onclick="adminSidebarNav('settings')">
+                <span class="icon">⚙️ Settings</span>
+              </div>
+            </div>
+
+            <div class="sidebar-footer">
+              <div class="sidebar-item logout-item" onclick="adminLogout()">
+                <span class="icon">🚪</span><span>🚪 Logout</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="admin-main">
+          <!-- ADMIN OVERVIEW -->
+          <div id="adminOverview">
+            <h1 style="margin: 40px 0 30px 0; font-size: 2.5rem;">Dashboard Overview</h1>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; margin-bottom:40px;">
+              <div class="card" style="text-align:center; padding:30px;">
+                <div style="font-size:3rem; color:#48bb78; margin-bottom:15px;">✈️</div>
+                <h3 style="margin-bottom:10px;">Total Bookings</h3>
+                <div id="totalBookings" style="font-size:2.5rem; font-weight:800; color:#00c2ff;">0</div>
+              </div>
+
+              <div class="card" style="text-align:center; padding:30px;">
+                <div style="font-size:3rem; color:#ed8936; margin-bottom:15px;">💰</div>
+                <h3 style="margin-bottom:10px;">Total Revenue</h3>
+                <div id="totalRevenue" style="font-size:2.5rem; font-weight:800; color:#ffb800;">₱0</div>
+              </div>
+
+              <div class="card" style="text-align:center; padding:30px;">
+                <div style="font-size:3rem; color:#48bb78; margin-bottom:15px;">👥</div>
+                <h3 style="margin-bottom:10px;">Total Users</h3>
+                <div id="totalUsers" style="font-size:2.5rem; font-weight:800; color:#00c2ff;">0</div>
+              </div>
+
+              <div class="card" style="text-align:center; padding:30px;">
+                <div style="font-size:3rem; color:#f56565; margin-bottom:15px;">📈</div>
+                <h3 style="margin-bottom:10px;">Today's Bookings</h3>
+                <div id="todayBookings" style="font-size:2.5rem; font-weight:800; color:#ff6b6b;">0</div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:30px;">
+              <div class="card" style="padding:30px;">
+                <h3 style="margin-bottom:25px; color:#00c2ff;">Recent Bookings</h3>
+                <div id="recentBookingsTable"></div>
+              </div>
+
+              <div class="card" style="padding:30px;">
+                <h3 style="margin-bottom:25px; color:#ffb800;">Quick Actions</h3>
+                <button class="premium-btn" style="width:100%; margin-bottom:15px; background: linear-gradient(135deg, #ffb800, #ff9500);" onclick="generateReport()">📊 Generate Report</button>
+                <button class="premium-btn" style="width:100%; background:#f56565;" onclick="clearAllData()">🗑️ Clear Demo Data</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN BOOKINGS -->
+          <div id="adminBookings" class="hidden">
+            <h1 style="margin: 40px 0 30px 0;">All Bookings</h1>
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="adminBookingsTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Route</th>
+                    <th>Date</th>
+                    <th>Seats</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>User</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ADMIN FLIGHTS -->
+          <div id="adminFlights" class="hidden">
+            <h1 style="margin: 40px 0 30px 0;">Flight Management</h1>
+            <div class="card" style="padding:30px; margin-bottom:30px;">
+              <h3>Add New Flight</h3>
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; margin-top:20px;">
+                <input id="newFlightRoute" placeholder="Route (MNL-CEB)" style="padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:white;" />
+                <input id="newFlightDate" type="date" style="padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:white;" />
+                <input id="newFlightPrice" placeholder="Price (3500)" style="padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:white;" />
+              </div>
+              <button class="premium-btn" style="width:100%; margin-top:20px; padding:16px;" onclick="addFlight()">Add Flight</button>
+            </div>
+            <div id="flightsList"></div>
+          </div>
+
+          <!-- ADMIN USERS -->
+          <div id="adminUsers" class="hidden">
+            <h1 style="margin: 40px 0 30px 0;">User Management</h1>
+            <table class="admin-table" id="adminUsersTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Bookings</th>
+                  <th>Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- ADMIN PAYMENTS -->
+          <div id="adminPayments" class="hidden">
+            <h1 style="margin: 40px 0 20px 0;">Payments</h1>
+            <div class="card" style="padding:26px; margin-bottom:20px;">
+              <h3 style="margin:0 0 6px 0; color:#00c2ff;">Paid / Paid-in-Progress Bookings</h3>
+              <p style="margin:0; color:rgba(255,255,255,0.75); font-weight:600;">This demo treats any booking with <b>paymentMethod</b> as paid.</p>
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="adminPaymentsTable">
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Route</th>
+                    <th>Date</th>
+                    <th>Seats</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ADMIN REPORTS -->
+          <div id="adminReports" class="hidden">
+            <h1 style="margin: 40px 0 20px 0;">Reports</h1>
+
+            <div class="card" style="padding:26px; margin-bottom:18px;">
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px;">
+                <div style="text-align:left;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#00c2ff;">💰</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Revenue (Today)</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.85rem;"><span id="r_checkinsToday">0</span> Check-ins</div>
+                    </div>
+                  </div>
+                  <div id="r_revenueToday" style="font-weight:1000; font-size:2.2rem; color:#00c2ff;">₱0</div>
+                </div>
+
+                <div style="text-align:left;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#ffb800;">🗓️</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Revenue (Yesterday)</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.85rem;"><span id="r_checkinsYesterday">0</span> Check-ins</div>
+                    </div>
+                  </div>
+                  <div id="r_revenueYesterday" style="font-weight:1000; font-size:2.2rem; color:#ffb800;">₱0</div>
+                </div>
+
+                <div style="text-align:left;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#48bb78;">📊</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Day-over-Day Growth</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.95rem;">Change</div>
+                    </div>
+                  </div>
+                  <div id="r_changeTodayVsYesterday" style="font-weight:1000; font-size:2.2rem; color:#48bb78;">+0.0%</div>
+                </div>
+
+                <div style="text-align:left;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#48bb78;">🧾</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Revenue This Week</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.95rem;">Mon–Sun</div>
+                    </div>
+                  </div>
+                  <div id="r_revenueThisWeek" style="font-weight:1000; font-size:2.2rem; color:#48bb78;">₱0</div>
+                </div>
+
+                <div style="text-align:left;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#00c2ff;">📈</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Revenue (This Month)</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.95rem;">Confirmed bookings</div>
+                    </div>
+                  </div>
+                  <div id="r_revenueThisMonth" style="font-weight:1000; font-size:2.2rem; color:#00c2ff;">₱0</div>
+                </div>
+
+                <div class="card" style="padding:22px; flex:1;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="font-size:2.4rem; color:#ffb800;">🏆</div>
+                    <div>
+                      <div style="font-weight:1000; color:#fff; opacity:0.95;">Top Route</div>
+                      <div style="font-weight:800; color:#8fa3b0; font-size:0.95rem;">By revenue</div>
+                    </div>
+                  </div>
+                  <div id="r_topRoute" style="font-weight:1000; font-size:1.35rem; color:#ffb800;">—</div>
+                  <div id="r_topRouteRange" style="font-weight:800; color:rgba(255,255,255,0.85); margin-top:6px;">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:26px; margin-bottom:18px;">
+              <h3 style="margin:0 0 10px 0; color:#48bb78;">Analytics Summary</h3>
+              <div id="r_summary" style="color: rgba(255,255,255,0.85); font-weight:600; line-height:1.8;"></div>
+            </div>
+
+            <div class="card" style="padding:26px;">
+              <button class="premium-btn" style="width:100%; background: linear-gradient(135deg, #00c2ff, #007cf0);" onclick="generateReport()">📊 Generate Report</button>
+              <p style="margin:14px 0 0 0; color: rgba(255,255,255,0.75); font-weight:600;">Generates a summary report from the latest data.</p>
+            </div>
+          </div>
+
+          <!-- ADMIN SETTINGS -->
+          <div id="adminSettings" class="hidden">
+            <h1 style="margin: 40px 0 30px 0;">System Settings</h1>
+            <div class="card" style="max-width:600px;">
+              <h3>Admin Credentials</h3>
+              <div class="input-group">
+                <label>Current Password</label>
+                <input type="password" id="currentAdminPass" placeholder="Current password" />
+              </div>
+              <div class="input-group">
+                <label>New Username</label>
+                <input type="text" id="newAdminUsername" placeholder="New username" value="admin" />
+              </div>
+              <div class="input-group">
+                <label>New Password</label>
+                <input type="password" id="newAdminPassword" placeholder="New password" />
+              </div>
+              <button class="premium-btn" style="width:100%; margin-top:20px;" onclick="updateAdminCredentials()">Update Credentials</button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="customModal" class="modal-wrap hidden">
+    <div class="modal-box">
+      <div class="modal-title" id="customTitle">Notice</div>
+      <p id="customMessage" style="margin-bottom:18px;"></p>
+      <button id="modalOKBtn" class="premium-btn" style="width:100%; background: linear-gradient(135deg, #00c2ff, #007cf0);" onclick="closeCustomModal()">OK</button>
+    </div>
+  </div>
+
+  <script>
+    let currentAdmin = null;
+
+    let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+    let bookings = JSON.parse(localStorage.getItem('customerBookings')) || [];
+    let flights = JSON.parse(localStorage.getItem('adminFlights')) || [];
+    let adminCredentials = JSON.parse(localStorage.getItem('adminCredentials')) || { username: 'admin', password: 'TCU_ADMIN' };
+
+    function saveLoginState(user) {
+      localStorage.setItem('adminLoggedIn', JSON.stringify({ username: user.username, timestamp: Date.now(), role: 'admin' }));
+    }
+
+    function clearLoginState() {
+      localStorage.removeItem('adminLoggedIn');
+    }
+
+    function checkLoginState() {
+      const adminData = localStorage.getItem('adminLoggedIn');
+      if (!adminData) return null;
+      try {
+        const admin = JSON.parse(adminData);
+        if (Date.now() - admin.timestamp < 24 * 60 * 60 * 1000) {
+          currentAdmin = admin;
+          return 'admin';
+        }
+      } catch (e) {}
+      localStorage.removeItem('adminLoggedIn');
+      return null;
+    }
+
+    function initDemoData() {
+      if (!Array.isArray(registeredUsers)) registeredUsers = [];
+      if (registeredUsers.length === 0) {
+        registeredUsers = [{
+          name: 'Demo User',
+          email: 'demo@highrise.com',
+          password: 'Demo123!',
+          joined: new Date().toISOString(),
+          bookings: 2
+        }];
+        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+      }
+
+      if (!Array.isArray(bookings)) bookings = [];
+      if (bookings.length === 0) {
+        bookings = [{
+          id: 'BK001',
+          route: 'Manila → Cebu',
+          date: new Date().toISOString().slice(0, 10),
+          time: '08:00 AM - 09:30 AM',
+          seat: '12A',
+          seats: '12A',
+          price: '₱3,500',
+          status: 'upcoming',
+          userEmail: 'demo@highrise.com',
+          timestamp: Date.now(),
+          paymentMethod: 'DemoPay'
+        }];
+        localStorage.setItem('customerBookings', JSON.stringify(bookings));
+      }
+
+      if (!Array.isArray(flights)) flights = [];
+      localStorage.setItem('adminFlights', JSON.stringify(flights));
+      localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
+    }
+
+    function refreshAllDataFromStorage() {
+      registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+      bookings = JSON.parse(localStorage.getItem('customerBookings')) || [];
+      flights = JSON.parse(localStorage.getItem('adminFlights')) || [];
+      adminCredentials = JSON.parse(localStorage.getItem('adminCredentials')) || adminCredentials;
+    }
+
+    function showCustomModal(title, message) {
+      const t = document.getElementById('customTitle');
+      const m = document.getElementById('customMessage');
+      if (t) t.textContent = title;
+      if (m) m.textContent = message;
+      document.getElementById('customModal')?.classList.remove('hidden');
+    }
+
+    function closeCustomModal() {
+      document.getElementById('customModal')?.classList.add('hidden');
+    }
+
+    function setSidebarActive(sideKey) {
+      ['dashboard','flights','bookings','payments','customers','reports','settings'].forEach(k => {
+        const el = document.getElementById(`side-${k}`);
+        if (el) el.classList.toggle('active', k === sideKey);
+      });
+    }
+
+    function showAdminSection(section) {
+      ['adminOverview','adminBookings','adminFlights','adminUsers','adminPayments','adminReports','adminSettings']
+        .forEach(id => document.getElementById(id)?.classList.add('hidden'));
+
+      const map = {
+        dashboard: 'adminOverview',
+        bookings: 'adminBookings',
+        flights: 'adminFlights',
+        customers: 'adminUsers',
+        payments: 'adminPayments',
+        reports: 'adminReports',
+        settings: 'adminSettings'
+      };
+
+      const target = map[section] || 'adminOverview';
+      document.getElementById(target)?.classList.remove('hidden');
+
+      refreshAllDataFromStorage();
+      renderAdminDashboard();
+      renderAdminBookingsTable();
+      renderAdminUsersTable();
+      renderFlightsList();
+      renderPaymentsPanel();
+      renderReportsPanel();
+    }
+
+    function adminSidebarNav(key) {
+      setSidebarActive(key);
+      const keyToSection = {
+        dashboard: () => showAdminSection('dashboard'),
+        flights: () => showAdminSection('flights'),
+        bookings: () => showAdminSection('bookings'),
+        payments: () => showAdminSection('payments'),
+        customers: () => showAdminSection('customers'),
+        reports: () => showAdminSection('reports'),
+        settings: () => showAdminSection('settings')
+      };
+      if (keyToSection[key]) keyToSection[key]();
+    }
+
+    function parseMoneyToNumber(money) {
+      if (!money) return 0;
+      return parseInt(String(money).replace(/[^0-9]/g, ''), 10) || 0;
+    }
+
+    function formatMoneyPHP(n) {
+      const num = parseInt(n || 0, 10) || 0;
+      return `₱${num.toLocaleString()}`;
+    }
+
+    function toYMD(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getStartOfWeekMonSun(d) {
+      const date = new Date(d);
+      const day = (date.getDay() + 6) % 7;
+      date.setDate(date.getDate() - day);
+      date.setHours(0,0,0,0);
+      return date;
+    }
+
+    function getEndOfWeekMonSun(d) {
+      const start = getStartOfWeekMonSun(d);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 6);
+      end.setHours(23,59,59,999);
+      return end;
+    }
+
+    function isSameYMD(bookingDateStr, targetDateObj) {
+      if (!bookingDateStr) return false;
+      return String(bookingDateStr) === toYMD(targetDateObj);
+    }
+
+    function isConfirmedCheckIn(b) {
+      return !!(b && b.paymentMethod);
+    }
+
+    function getTopRouteForRevenue(bookingsSubset) {
+      const groups = new Map();
+      for (const b of bookingsSubset) {
+        const route = String(b.route || '').trim() || 'Unknown';
+        const revenue = parseMoneyToNumber(b.price);
+        if (!groups.has(route)) groups.set(route, { total: 0, min: revenue, max: revenue, count: 0 });
+        const g = groups.get(route);
+        g.total += revenue;
+        g.min = Math.min(g.min, revenue);
+        g.max = Math.max(g.max, revenue);
+        g.count += 1;
+      }
+
+      if (groups.size === 0) return { label: '—', range: '—' };
+
+      let bestLabel = '—';
+      let bestTotal = -1;
+      let best = null;
+
+      for (const [label, g] of groups.entries()) {
+        if (g.total > bestTotal) {
+          bestTotal = g.total;
+          bestLabel = label;
+          best = g;
+        }
+      }
+
+      return {
+        label: bestLabel,
+        range: best ? `${formatMoneyPHP(best.min)} - ${formatMoneyPHP(best.max)} (${best.count} bookings)` : '—'
+      };
+    }
+
+    function renderAdminDashboard() {
+      const totalBookingsEl = document.getElementById('totalBookings');
+      const totalUsersEl = document.getElementById('totalUsers');
+      const totalRevenueEl = document.getElementById('totalRevenue');
+      const todayBookingsEl = document.getElementById('todayBookings');
+      const recentBookingsEl = document.getElementById('recentBookingsTable');
+
+      if (totalBookingsEl) totalBookingsEl.textContent = bookings.length;
+      if (totalUsersEl) totalUsersEl.textContent = registeredUsers.length;
+
+      const totalRevenue = bookings.reduce((sum, b) => sum + parseMoneyToNumber(b.price), 0);
+      if (totalRevenueEl) totalRevenueEl.textContent = formatMoneyPHP(totalRevenue);
+
+      const today = new Date();
+      const todayBookings = bookings.filter(b => isSameYMD(b.date, today)).length;
+      if (todayBookingsEl) todayBookingsEl.textContent = todayBookings;
+
+      if (recentBookingsEl) {
+        const recent = bookings.slice(-5).reverse().map(b => `
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
+            <span>${b.route || '—'} (${b.seats || b.seat || '—'})</span>
+            <span style="color:#00c2ff;">${b.price || '—'}</span>
+          </div>
+        `).join('');
+        recentBookingsEl.innerHTML = recent || '<p style="color:#8fa3b0;text-align:center;">No recent bookings</p>';
+      }
+    }
+
+    function renderAdminBookingsTable() {
+      const tbody = document.querySelector('#adminBookingsTable tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = bookings.length ? bookings.map(booking => {
+        const statusColor = booking.status === 'upcoming' ? '#48bb78' : booking.status === 'pending' ? '#ed8936' : '#f56565';
+        return `
+          <tr>
+            <td>${booking.id}</td>
+            <td>${booking.route}</td>
+            <td>${booking.date}</td>
+            <td>${booking.seats || booking.seat}</td>
+            <td>${booking.price}</td>
+            <td><span style="color:${statusColor};font-weight:600;">${(booking.status || 'unknown').toUpperCase()}</span></td>
+            <td>${booking.userEmail}</td>
+            <td>
+              <button class="premium-btn" onclick="viewBookingDetails('${booking.id}')" style="padding:6px 12px;font-size:0.8rem;height:auto;">View</button>
+              <button class="premium-btn" onclick="deleteBooking('${booking.id}')" style="padding:6px 12px;font-size:0.8rem;background:#f56565;margin-left:5px;height:auto;">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('') : '';
+    }
+
+    function renderAdminUsersTable() {
+      const tbody = document.querySelector('#adminUsersTable tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = registeredUsers.length ? registeredUsers.map(user => {
+        const userBookingsCount = bookings.filter(b => b.userEmail === user.email).length;
+        return `
+          <tr>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${userBookingsCount}</td>
+            <td>${user.joined ? new Date(user.joined).toLocaleDateString() : '—'}</td>
+            <td>
+              <button class="premium-btn" onclick="deleteUser('${user.email}')" style="padding:6px 12px;font-size:0.8rem;background:#f56565;height:auto;">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('') : '';
+    }
+
+    function renderFlightsList() {
+      const flightsListEl = document.getElementById('flightsList');
+      if (!flightsListEl) return;
+
+      flightsListEl.innerHTML = flights && flights.length ? flights.map((f, idx) => `
+        <div class="card" style="padding:20px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h4 style="margin:0 0 5px 0;color:#00c2ff;">${f.route}</h4>
+            <p style="margin:0;color:rgba(255,255,255,0.8);">${f.date}</p>
+          </div>
+          <div>
+            <div style="color:#c5d4dc;margin-top:6px;font-weight:700;">💳 ${f.price || ''}</div>
+          </div>
+          <button class="premium-btn" onclick="deleteFlight(${idx})" style="background:#f56565;height:auto;">Delete</button>
+        </div>
+      `).join('') : '<p style="text-align:center;color:#8fa3b0;">No flights added yet.</p>';
+    }
+
+    function renderPaymentsPanel() {
+      const tbody = document.querySelector('#adminPaymentsTable tbody');
+      if (!tbody) return;
+
+      const paidBookings = bookings
+        .filter(b => b && b.status === 'upcoming' && b.paymentMethod)
+        .slice()
+        .sort((a, c) => (c.timestamp || 0) - (a.timestamp || 0));
+
+      tbody.innerHTML = paidBookings.length ? paidBookings.map(b => `
+        <tr>
+          <td>${b.id || '—'}</td>
+          <td>${b.route || '—'}</td>
+          <td>${b.date || '—'}</td>
+          <td>${b.seats || b.seat || '—'}</td>
+          <td>${b.price || '—'}</td>
+          <td>${b.paymentMethod || '—'}</td>
+          <td>
+            <button class="premium-btn" onclick="viewBookingDetails('${b.id}')" style="padding:6px 12px;font-size:0.8rem;height:auto;">View</button>
+          </td>
+        </tr>
+      `).join('') : `
+        <tr>
+          <td colspan="7" style="text-align:center;color:rgba(255,255,255,0.75);padding:26px;font-weight:800;">No payments yet.</td>
+        </tr>
+      `;
+    }
+
+    function renderReportsPanel() {
+      const now = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(now.getDate() - 1);
+
+      const paidToday = bookings.filter(b => isConfirmedCheckIn(b) && isSameYMD(b.date, now));
+      const paidYesterday = bookings.filter(b => isConfirmedCheckIn(b) && isSameYMD(b.date, yesterday));
+
+      const revToday = paidToday.reduce((s, b) => s + parseMoneyToNumber(b.price), 0);
+      const revYesterday = paidYesterday.reduce((s, b) => s + parseMoneyToNumber(b.price), 0);
+
+      const change = revYesterday > 0
+        ? ((revToday - revYesterday) / revYesterday) * 100
+        : (revToday > 0 ? 100 : 0);
+
+      const startWeek = getStartOfWeekMonSun(now);
+      const endWeek = getEndOfWeekMonSun(now);
+
+      const revWeek = bookings
+        .filter(b => isConfirmedCheckIn(b))
+        .filter(b => {
+          const d = new Date(b.date);
+          return d >= startWeek && d <= endWeek;
+        })
+        .reduce((s, b) => s + parseMoneyToNumber(b.price), 0);
+
+      const revMonth = bookings
+        .filter(b => isConfirmedCheckIn(b))
+        .filter(b => {
+          const d = new Date(b.date);
+          return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        })
+        .reduce((s, b) => s + parseMoneyToNumber(b.price), 0);
+
+      const top = getTopRouteForRevenue(bookings.filter(isConfirmedCheckIn));
+
+      const setVal = (id, v) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = v;
+      };
+
+      setVal('r_revenueToday', formatMoneyPHP(revToday));
+      setVal('r_checkinsToday', paidToday.length);
+      setVal('r_revenueYesterday', formatMoneyPHP(revYesterday));
+      setVal('r_checkinsYesterday', paidYesterday.length);
+      setVal('r_changeTodayVsYesterday', (change >= 0 ? '+' : '') + change.toFixed(1) + '%');
+      setVal('r_revenueThisWeek', formatMoneyPHP(revWeek));
+      setVal('r_revenueThisMonth', formatMoneyPHP(revMonth));
+      setVal('r_topRoute', top.label);
+      setVal('r_topRouteRange', top.range);
+
+      const summaryEl = document.getElementById('r_summary');
+      if (summaryEl) {
+        const totalHistoricalRevenue = formatMoneyPHP(bookings.reduce((s, b) => s + parseMoneyToNumber(b.price), 0));
+        summaryEl.innerHTML = `
+          <div>✅ Total System Bookings: <b>${bookings.length}</b></div>
+          <div>💰 Total Historical Revenue: <b>${totalHistoricalRevenue}</b></div>
+        `;
+      }
+    }
+
+    function viewBookingDetails(id) {
+      const booking = bookings.find(b => b.id === id);
+      if (!booking) return;
+
+      const message = [
+        `ID: ${booking.id}`,
+        `Route: ${booking.route}`,
+        `Date: ${booking.date}`,
+        `Seats: ${booking.seats || booking.seat || '—'}`,
+        `Price: ${booking.price || '—'}`,
+        `Status: ${(booking.status || 'unknown').toUpperCase()}`,
+        `Payment Method: ${booking.paymentMethod || '—'}`
+      ].join('\n');
+
+      showCustomModal('Booking Details', message);
+    }
+
+    function deleteBooking(id) {
+      if (!confirm('Delete this booking?')) return;
+
+      refreshAllDataFromStorage();
+      bookings = bookings.filter(b => b.id !== id);
+      localStorage.setItem('customerBookings', JSON.stringify(bookings));
+
+      refreshAllDataFromStorage();
+      renderAdminDashboard();
+      renderAdminBookingsTable();
+      renderPaymentsPanel();
+      renderReportsPanel();
+
+      showCustomModal('Deleted', 'Booking removed successfully.');
+    }
+
+    function deleteFlight(index) {
+      if (!confirm('Delete this flight?')) return;
+
+      refreshAllDataFromStorage();
+      flights.splice(index, 1);
+      localStorage.setItem('adminFlights', JSON.stringify(flights));
+
+      refreshAllDataFromStorage();
+      renderFlightsList();
+      showCustomModal('Deleted', 'Flight removed successfully.');
+    }
+
+    function deleteUser(email) {
+      if (!confirm('Delete this user and all their bookings?')) return;
+
+      refreshAllDataFromStorage();
+
+      registeredUsers = registeredUsers.filter(u => u.email !== email);
+      bookings = bookings.filter(b => b.userEmail !== email);
+
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+      localStorage.setItem('customerBookings', JSON.stringify(bookings));
+
+      refreshAllDataFromStorage();
+      renderAdminDashboard();
+      renderAdminUsersTable();
+      renderAdminBookingsTable();
+      renderPaymentsPanel();
+      renderReportsPanel();
+
+      showCustomModal('Deleted', 'User and bookings removed.');
+    }
+
+    function addFlight() {
+      const route = document.getElementById('newFlightRoute').value.trim();
+      const date = document.getElementById('newFlightDate').value;
+      const priceRaw = document.getElementById('newFlightPrice').value.trim();
+
+      const dateVal = document.getElementById('newFlightDate').value;
+
+      if (!route || !dateVal || !priceRaw) {
+        showCustomModal('Error', 'Please fill route, date, and price.');
+        return;
+      }
+
+      const price = priceRaw.startsWith('₱') ? priceRaw : `₱${priceRaw}`;
+
+      refreshAllDataFromStorage();
+      flights = Array.isArray(flights) ? flights : [];
+      flights.push({ route, date: dateVal, price });
+      localStorage.setItem('adminFlights', JSON.stringify(flights));
+
+      document.getElementById('newFlightRoute').value = '';
+      document.getElementById('newFlightDate').value = '';
+      document.getElementById('newFlightPrice').value = '';
+
+      refreshAllDataFromStorage();
+      renderFlightsList();
+      showCustomModal('Success', 'Flight added successfully.');
+    }
+
+    function generateReport() {
+      refreshAllDataFromStorage();
+
+      const totalRevenue = bookings.reduce((s, b) => s + parseMoneyToNumber(b.price), 0);
+      const message = [
+        `Total Revenue: ${formatMoneyPHP(totalRevenue)}`,
+        `Active Users: ${registeredUsers.length}`,
+        `Generated: ${new Date().toLocaleString()}`
+      ].join('\n');
+
+      showCustomModal('📊 Report Generated', message);
+    }
+
+    function clearAllData() {
+      if (!confirm('Are you sure? This will delete ALL demo data!')) return;
+      localStorage.clear();
+      location.reload();
+    }
+
+    function updateAdminCredentials() {
+      refreshAllDataFromStorage();
+
+      const currentPass = document.getElementById('currentAdminPass').value;
+      const newUsername = document.getElementById('newAdminUsername').value.trim();
+      const newPassword = document.getElementById('newAdminPassword').value;
+
+      if (currentPass !== adminCredentials.password) {
+        showCustomModal('Error', 'Current password incorrect');
+        return;
+      }
+
+      if (!newUsername || !newPassword) {
+        showCustomModal('Error', 'Please fill new credentials');
+        return;
+      }
+
+      adminCredentials = { username: newUsername, password: newPassword };
+      localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
+      showCustomModal('Success', 'Admin credentials updated!');
+    }
+
+    function adminLogin() {
+      const username = document.getElementById('adminUsername').value.trim();
+      const password = document.getElementById('adminPassword').value;
+
+      document.querySelectorAll('#adminLoginPage .error-msg').forEach(el => {
+        el.style.display = 'none';
+        el.textContent = '';
+      });
+
+      if (!username || !password) {
+        const err = document.getElementById('adminLoginError');
+        err.textContent = 'Please enter both username and password';
+        err.style.display = 'block';
+        return;
+      }
+
+      refreshAllDataFromStorage();
+
+      if (username === adminCredentials.username && password === adminCredentials.password) {
+        currentAdmin = { username, role: 'admin' };
+        saveLoginState(currentAdmin);
+
+        document.getElementById('adminLoginPage').classList.add('hidden');
+        document.getElementById('adminPage').classList.remove('hidden');
+
+        document.getElementById('adminUsername').value = '';
+        document.getElementById('adminPassword').value = '';
+
+        initDemoData();
+        showAdminSection('dashboard');
+        setSidebarActive('dashboard');
+
+        showCustomModal('✅ Admin Access Granted', `Welcome back, ${username}!`);
+      } else {
+        const err = document.getElementById('adminLoginError');
+        err.textContent = '❌ Invalid credentials';
+        err.style.display = 'block';
+      }
+    }
+
+    function adminLogout() {
+      clearLoginState();
+      currentAdmin = null;
+      document.getElementById('adminPage').classList.add('hidden');
+      document.getElementById('adminLoginPage').classList.remove('hidden');
+      showCustomModal('Logged Out', 'Admin session ended successfully.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initDemoData();
+      const loginState = checkLoginState();
+      if (loginState === 'admin') {
+        document.getElementById('adminLoginPage').classList.add('hidden');
+        document.getElementById('adminPage').classList.remove('hidden');
+        showAdminSection('dashboard');
+        setSidebarActive('dashboard');
+      } else {
+        document.getElementById('adminLoginPage').classList.remove('hidden');
+        document.getElementById('adminPage').classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
+

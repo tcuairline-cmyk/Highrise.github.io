@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - High-Rise Airlines</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background: radial-gradient(circle at top, #0b2a3a, #050c12 65%);
+    color:#fff;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 50px;
+    background:rgba(10,20,30,0.7);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:1.8rem;
+    font-weight:800;
+}
+
+.logo span{color:#00c2ff;}
+
+.main-nav{
+    display:flex;
+    gap:18px;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#cbd6dd;
+    padding:10px 16px;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.nav-item:hover{
+    background:rgba(0,194,255,0.12);
+    color:#00c2ff;
+    transform:translateY(-2px);
+}
+
+.nav-item.active{
+    background:rgba(0,194,255,0.18);
+    color:#00c2ff;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:70px 20px;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.hero h1{
+    font-size:3.4rem;
+    font-weight:800;
+    background: linear-gradient(90deg,#fff,#00c2ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    margin-top:10px;
+    color:#b8c7d1;
+}
+
+/* GRID LAYOUT */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:22px;
+    backdrop-filter: blur(12px);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(0,194,255,0.4);
+    box-shadow:0 10px 30px rgba(0,194,255,0.1);
+}
+
+.card h3{
+    color:#00c2ff;
+    margin-bottom:10px;
+    font-size:1.1rem;
+}
+
+.card p{
+    color:#cfd9df;
+    font-size:0.95rem;
+    line-height:1.5;
+}
+
+/* FULL WIDTH CARD */
+.full{
+    grid-column:span 3;
+}
+
+/* SUPPORT BUTTONS */
+.actions{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.btn{
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:rgba(0,0,0,0.25);
+    color:#fff;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:0.9rem;
+}
+
+.btn:hover{
+    background:rgba(0,194,255,0.15);
+    border-color:#00c2ff;
+    color:#00c2ff;
+}
+
+/* FOOTER INFO STRIP */
+.footer-strip{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.strip-box{
+    padding:18px;
+    background:rgba(255,255,255,0.04);
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.06);
+    text-align:center;
+}
+
+.strip-box h4{
+    color:#00c2ff;
+    margin-bottom:6px;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .grid{grid-template-columns:1fr;}
+    .full{grid-column:auto;}
+    .footer-strip{grid-template-columns:1fr 1fr;}
+    header{flex-direction:column;gap:10px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">High-Rise <span>Airlines</span></div>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-item">Book Flights</a>
+ 
+        <a href="travel-info.html" class="nav-item">Travel Info</a>
+        <a href="about_us.html" class="nav-item">About Us</a>
+        <a href="contact.html" class="nav-item active">Contact</a>
+        <a href="faq.html" class="nav-item">FAQs</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>Contact & Support Hub</h1>
+        <p>Premium global assistance — anytime, anywhere you fly</p>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid">
+
+        <div class="card">
+            <h3>📧 Email Support</h3>
+            <p>support@highriseairlines.com</p>
+            <p>Response time: under 2 hours (priority queue)</p>
+        </div>
+
+        <div class="card">
+            <h3>📞 Global Hotline</h3>
+            <p>+63 912 345 6789</p>
+            <p>24/7 multilingual assistance</p>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Flight Operations</h3>
+            <p>Delays, cancellations, rebooking support</p>
+            <p>Live operational center available</p>
+        </div>
+
+        <div class="card">
+            <h3>🧳 Baggage Support</h3>
+            <p>Lost, delayed, or damaged luggage claims</p>
+            <div class="actions">
+                <button class="btn">Track Bag</button>
+                <button class="btn">Report Issue</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>💳 Payments & Refunds</h3>
+            <p>Refund status, billing issues, invoice requests</p>
+            <div class="actions">
+                <button class="btn">Check Refund</button>
+                <button class="btn">Billing Help</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🌐 Travel Requirements</h3>
+            <p>Visa info, documents, country restrictions</p>
+            <div class="actions">
+                <button class="btn">Check Entry Rules</button>
+            </div>
+        </div>
+
+        <div class="card full">
+            <h3>🏢 Headquarters</h3>
+            <p>
+                High-Rise Airlines Center<br>
+                Manila, Philippines<br>
+                Global Customer Experience & Operations Command Hub
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FOOTER STRIP -->
+    <div class="footer-strip">
+
+        <div class="strip-box">
+            <h4>24/7 Support</h4>
+            <p>Always online global service</p>
+        </div>
+
+        <div class="strip-box">
+            <h4>Live Agents</h4>
+            <p>Human support, not bots</p>
+        </div>
+
+        <div class="strip-box">
+            <h4>Fast Response</h4>
+            <p>Priority ticket handling</p>
+        </div>
+
+        <div class="strip-box">
+            <h4>Global Network</h4>
+            <p>150+ countries coverage</p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

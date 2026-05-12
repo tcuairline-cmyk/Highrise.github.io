@@ -1,0 +1,18 @@
+FIX ADMIN DASHBOARD (REPAIR PLAN)
+
+Observed critical breakages:
+1) admin_dashboard.html contains corrupted diff markers (+ lines) inside HTML/JS. There is also evidence of broken JS template strings and stray HTML inside JS (e.g. a fragment like <div ...> inside a JS function).
+2) admin_dashboard_fixed.js is currently a placeholder, so the page relies on the inline <script> block and it must be corrected directly.
+
+Plan:
+- Step A: Remove corrupted ‘+’ diff artifacts from the Reports cards HTML.
+- Step B: Remove/restore the broken JS sections: the renderReportsPanel(), renderPaymentsPanel(), and especially the getTopRoomTypeForRevenue() function are corrupted in the inline script (contains stray HTML inside JS). Also the file references refund UI/tables and functions that don’t exist in this HTML layout.
+- Step C: Replace the entire inline <script> with a clean, working implementation that matches the current HTML structure (dashboard/bookings/flights/users/payments/reports/settings, and custom modal).
+- Step D: Add missing helpers used by the new script (renderFlightsList, renderAdminBookingsTable, renderAdminUsersTable, renderPaymentsPanel, renderReportsPanel, generateReport, updateAdminCredentials, etc.).
+- Step E: Verify quickly by running a minimal browser check: open admin_dashboard.html and ensure no console syntax errors.
+
+Files to edit:
+- admin_dashboard.html only.
+
+Deliverable:
+- A corrected admin_dashboard.html with a single clean inline script; admin_dashboard_fixed.js stays placeholder unless you want refactor.

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Travel Information - High-Rise Airlines</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#07141d;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:rgba(7,20,29,0.96);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+}
+
+.logo-main{
+    font-size:1.7rem;
+    font-weight:800;
+}
+
+.logo-sub{
+    font-size:1rem;
+    color:#00c2ff;
+    font-weight:600;
+}
+
+.main-nav{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:white;
+    padding:10px 18px;
+    border-radius:12px;
+    transition:0.3s ease;
+    font-weight:500;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:rgba(0,194,255,0.16);
+    color:#00c2ff;
+}
+
+.profile-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.2rem;
+}
+
+/* HERO */
+
+.hero{
+    position:relative;
+    text-align:center;
+    padding:120px 20px 90px;
+    background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop')
+        center/cover;
+}
+
+.hero h1{
+    font-size:4.2rem;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.hero p{
+    color:#d4e2ea;
+    font-size:1.1rem;
+}
+
+/* MAIN */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:70px 20px;
+}
+
+/* GRID */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    margin-bottom:60px;
+}
+
+.info-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:28px;
+    padding:35px;
+    backdrop-filter:blur(16px);
+    transition:0.35s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.info-card::before{
+    content:'';
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(0,194,255,0.08);
+    border-radius:50%;
+    top:-60px;
+    right:-60px;
+}
+
+.card-icon{
+    font-size:2rem;
+    margin-bottom:18px;
+}
+
+.info-card h2{
+    font-size:1.7rem;
+    margin-bottom:20px;
+}
+
+.requirements-list,
+.guide-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.requirement-item,
+.guide-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:rgba(255,255,255,0.04);
+    padding:16px;
+    border-radius:18px;
+    transition:0.3s ease;
+}
+
+.requirement-item:hover,
+.guide-item:hover{
+    background:rgba(0,194,255,0.12);
+}
+
+.check{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#00c2ff,#007cf0);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+/* TIMELINE */
+
+.timeline-section{
+    margin-top:40px;
+}
+
+.timeline-title{
+    text-align:center;
+    font-size:3rem;
+    margin-bottom:50px;
+}
+
+.timeline{
+    position:relative;
+    max-width:1000px;
+    margin:auto;
+}
+
+.timeline::before{
+    content:'';
+    position:absolute;
+    width:4px;
+    background:#00c2ff;
+    top:0;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.timeline-item{
+    position:relative;
+    width:50%;
+    padding:25px 40px;
+}
+
+.timeline-item.left{
+    left:0;
+}
+
+.timeline-item.right{
+    left:50%;
+}
+
+.timeline-content{
+    background:rgba(255,255,255,0.05);
+    padding:28px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,0.08);
+    transition:0.3s ease;
+}
+
+.timeline-content:hover{
+    transform:translateY(-3px);
+}
+
+.timeline-content h3{
+    color:#00c2ff;
+    margin-bottom:12px;
+}
+
+.timeline-dot{
+    position:absolute;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#00c2ff;
+    top:38px;
+    right:-11px;
+}
+
+.timeline-item.right .timeline-dot{
+    left:-11px;
+}
+
+/* ALERT BOX */
+
+.alert-box{
+    margin-top:80px;
+    background:linear-gradient(
+        135deg,
+        rgba(0,194,255,0.15),
+        rgba(0,124,240,0.08)
+    );
+    border:1px solid rgba(0,194,255,0.15);
+    padding:45px;
+    border-radius:30px;
+    text-align:center;
+}
+
+.alert-box h2{
+    font-size:2.6rem;
+    margin-bottom:16px;
+}
+
+.alert-box p{
+    color:#d5e3eb;
+    margin-bottom:28px;
+}
+
+.alert-btn{
+    display:inline-block;
+    padding:16px 32px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#00c2ff,#007cf0);
+    text-decoration:none;
+    color:white;
+    font-weight:700;
+    transition:0.3s ease;
+}
+
+.alert-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(0,124,240,0.35);
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+    header{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+
+    .main-nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:2.8rem;
+    }
+
+    .timeline::before{
+        left:20px;
+    }
+
+    .timeline-item{
+        width:100%;
+        padding-left:60px;
+        padding-right:20px;
+    }
+
+    .timeline-item.right{
+        left:0;
+    }
+
+    .timeline-dot{
+        left:9px !important;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        <span class="logo-main">High-Rise</span>
+        <span class="logo-sub">Airlines</span>
+    </div>
+
+    <nav class="main-nav">
+
+        <a href="index.html" class="nav-item">
+            Book Flights
+        </a>
+
+
+
+        <a href="travel-info.html" class="nav-item active">
+            Travel Information
+        </a>
+
+        <a href="about_us.html" class="nav-item">
+            About Us
+        </a>
+
+        <a href="contact.html" class="nav-item">
+            Contact
+        </a>
+
+        <a href="faq.html" class="nav-item">
+            FAQs
+        </a>
+
+    </nav>
+
+    <div class="profile-btn">
+        👤
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>Travel Information</h1>
+
+    <p>
+        Everything you need for a smooth and stress-free journey.
+    </p>
+
+</section>
+
+<div class="container">
+
+    <!-- TOP CARDS -->
+
+    <div class="info-grid">
+
+        <!-- REQUIREMENTS -->
+
+        <div class="info-card">
+
+            <div class="card-icon">📄</div>
+
+            <h2>Requirements</h2>
+
+            <div class="requirements-list">
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Valid government-issued ID</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Confirmed airline ticket</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Passport (for international flights)</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BAGGAGE -->
+
+        <div class="info-card">
+
+            <div class="card-icon">🧳</div>
+
+            <h2>Baggage Policy</h2>
+
+            <div class="requirements-list">
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>7kg carry-on baggage</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Checked baggage varies by class</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Dangerous goods prohibited</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SAFETY -->
+
+        <div class="info-card">
+
+            <div class="card-icon">🛡️</div>
+
+            <h2>Travel Safety</h2>
+
+            <div class="requirements-list">
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Follow airport announcements</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Keep travel documents ready</span>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="check">✓</div>
+                    <span>Arrive 3 hours before departure</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+
+    <section class="timeline-section">
+
+        <h2 class="timeline-title">
+            Travel Guide
+        </h2>
+
+        <div class="timeline">
+
+            <div class="timeline-item left">
+
+                <div class="timeline-content">
+
+                    <h3>Choose your destination</h3>
+
+                    <p>
+                        Select your dream destination and travel dates.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+            <div class="timeline-item right">
+
+                <div class="timeline-content">
+
+                    <h3>Book your flight early</h3>
+
+                    <p>
+                        Booking in advance gives better fares and seat options.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+            <div class="timeline-item left">
+
+                <div class="timeline-content">
+
+                    <h3>Prepare documents</h3>
+
+                    <p>
+                        Make sure IDs, visas, and passports are ready.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+            <div class="timeline-item right">
+
+                <div class="timeline-content">
+
+                    <h3>Arrive at the airport early</h3>
+
+                    <p>
+                        Arrive at least 3 hours before departure.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+            <div class="timeline-item left">
+
+                <div class="timeline-content">
+
+                    <h3>Enjoy your trip!</h3>
+
+                    <p>
+                        Relax and experience premium travel with High-Rise Airlines.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+            <div class="timeline-item right">
+
+                <div class="timeline-content">
+
+                    <h3>Plan your return journey</h3>
+
+                    <p>
+                        Book your return flight early for convenience and savings.
+                    </p>
+
+                </div>
+
+                <div class="timeline-dot"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SUPPORT -->
+
+    <div class="alert-box">
+
+        <h2>Need More Travel Assistance?</h2>
+
+        <p>
+            Our support team is available 24/7 to assist your travel needs.
+        </p>
+
+        <a href="contact.html" class="alert-btn">
+            Contact Support
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

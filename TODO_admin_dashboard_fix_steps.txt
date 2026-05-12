@@ -1,0 +1,7 @@
+1) Replace corrupted inline JS in admin_dashboard.html.
+2) Remove diff-marker '+' artifacts.
+3) Fix broken getTopRouteForRevenue() (remove stray HTML inside JS).
+4) Ensure adminSidebarNav uses correct mapping for settings/customers.
+5) Verify renderReportsPanel updates all report card elements.
+6) Ensure page switches work and tables render without JS errors.
+

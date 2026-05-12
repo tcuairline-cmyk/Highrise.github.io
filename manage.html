@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Booking - High-Rise Airlines</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background: radial-gradient(circle at top, #0b2a3a, #050c12 65%);
+    color:white;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:rgba(10,20,30,0.7);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:1.8rem;
+    font-weight:800;
+}
+
+.logo span{color:#00c2ff;}
+
+.main-nav{
+    display:flex;
+    gap:18px;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#cbd6dd;
+    padding:10px 16px;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:rgba(0,194,255,0.15);
+    color:#00c2ff;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.hero h1{
+    font-size:3.4rem;
+    font-weight:800;
+    background: linear-gradient(90deg,#fff,#00c2ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    color:#b8c7d1;
+    margin-top:10px;
+}
+
+/* SEARCH PANEL */
+.search-panel{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:30px;
+    backdrop-filter: blur(15px);
+    margin-bottom:30px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.input{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+label{
+    color:#9fb4c1;
+    font-size:0.9rem;
+}
+
+input{
+    padding:14px;
+    border-radius:14px;
+    border:none;
+    outline:none;
+    background:#f3f6f9;
+}
+
+button{
+    margin-top:20px;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00c2ff,#007cf0);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(0,124,240,0.35);
+}
+
+/* BOOKING CARD */
+.card{
+    display:none;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:30px;
+    backdrop-filter: blur(15px);
+}
+
+.card.show{display:block;}
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:0.8rem;
+    background:rgba(0,255,140,0.15);
+    color:#00ff9d;
+    border:1px solid rgba(0,255,140,0.3);
+}
+
+/* INFO GRID */
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.info{
+    background:rgba(255,255,255,0.06);
+    padding:18px;
+    border-radius:16px;
+}
+
+.info span{
+    color:#8ea5b2;
+    font-size:0.85rem;
+}
+
+.info strong{
+    display:block;
+    margin-top:6px;
+}
+
+/* TIMELINE */
+.timeline{
+    margin-top:20px;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(0,0,0,0.25);
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.timeline-item{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    color:#cfd9df;
+}
+
+/* ACTIONS */
+.actions{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.action-btn{
+    flex:1;
+    padding:12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.action-btn:hover{
+    border-color:#00c2ff;
+    color:#00c2ff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .grid{grid-template-columns:1fr;}
+    .info-grid{grid-template-columns:1fr;}
+    header{flex-direction:column;gap:10px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">High-Rise <span>Airlines</span></div>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-item">Book Flights</a>
+        <a href="manage.html" class="nav-item active">Manage</a>
+        <a href="travel-info.html" class="nav-item">Travel Info</a>
+        <a href="about_us.html" class="nav-item">About Us</a>
+        <a href="contact.html" class="nav-item">Contact</a>
+        <a href="faq.html" class="nav-item">FAQs</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>Manage Your Booking</h1>
+        <p>View itinerary, update seats, and control your journey</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-panel">
+
+        <div class="grid">
+
+            <div class="input">
+                <label>Booking Reference (PNR)</label>
+                <input id="code" placeholder="e.g HRX9K2">
+            </div>
+
+            <div class="input">
+                <label>Last Name</label>
+                <input id="lname" placeholder="e.g Santos">
+            </div>
+
+        </div>
+
+        <button onclick="showBooking()">Find Booking</button>
+
+    </div>
+
+    <!-- BOOKING RESULT -->
+    <div class="card" id="card">
+
+        <div class="header-row">
+            <h2>Booking Overview</h2>
+            <div class="badge">CONFIRMED</div>
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info">
+                <span>Passenger</span>
+                <strong>Juan Dela Cruz</strong>
+            </div>
+
+            <div class="info">
+                <span>Flight</span>
+                <strong>HR-102</strong>
+            </div>
+
+            <div class="info">
+                <span>Route</span>
+                <strong>Manila → Cebu</strong>
+            </div>
+
+            <div class="info">
+                <span>Date</span>
+                <strong>July 20, 2026</strong>
+            </div>
+
+            <div class="info">
+                <span>Seat</span>
+                <strong>12A (Window)</strong>
+            </div>
+
+            <div class="info">
+                <span>Class</span>
+                <strong>Economy Plus</strong>
+            </div>
+
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <span>Check-in Opens</span>
+                <span>24h before departure</span>
+            </div>
+
+            <div class="timeline-item">
+                <span>Boarding Time</span>
+                <span>18:40</span>
+            </div>
+
+            <div class="timeline-item">
+                <span>Gate</span>
+                <span>B12</span>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button class="action-btn">Change Seat</button>
+            <button class="action-btn">Upgrade</button>
+            <button class="action-btn">Add Baggage</button>
+            <button class="action-btn">Cancel Booking</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function showBooking(){
+
+    const c = document.getElementById("code").value;
+    const l = document.getElementById("lname").value;
+
+    if(!c || !l){
+        alert("Please fill in all fields");
+        return;
+    }
+
+    document.getElementById("card").classList.add("show");
+
+}
+
+</script>
+
+</body>
+</html>
