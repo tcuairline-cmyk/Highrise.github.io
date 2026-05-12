@@ -369,6 +369,35 @@ justify-content:center;
 border-radius:12px;
 }
 
+/* SEARCH WIDGET (Main page hero) */
+.search-widget{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  box-sizing: border-box;
+}
+
+.search-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.search-group label{
+  font-size:0.85rem;
+  font-weight:600;
+  color:#333;
+}
+
 .search-box{
 background:white;
 color:black;
@@ -408,6 +437,94 @@ padding:15px;
 border-radius:10px;
 margin:10px 0;
 }
+
+/* ================= MANAGE (Highrise Demo style, header excluded) ================= */
+#manage{
+  padding: 10px 0;
+}
+
+/* Tabs */
+.manage-tabs{
+  display:flex;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  margin-bottom: 1.5rem;
+}
+.manage-tabs .tab-btn{
+  padding-bottom: 1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  cursor:pointer;
+  background: transparent;
+  border: none;
+}
+.manage-tabs .tab-btn.active{
+  color: #b8a200;
+  border-bottom: 2px solid #b8a200;
+}
+
+/* Booking card rows */
+.manage-booking-card{
+  background: #145c44;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.manage-booking-card .booking-thumb{
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.manage-booking-card .booking-title{
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 0.35rem;
+}
+
+.manage-booking-card .booking-sub{
+  color: rgba(255,255,255,0.75);
+  font-size: 0.92rem;
+  margin-bottom: 0.85rem;
+}
+
+.manage-booking-card .booking-meta-grid{
+  display:flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.manage-booking-card .meta-block{
+  min-width: 150px;
+}
+
+.manage-booking-card .meta-label{
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 0.15rem;
+}
+
+.manage-booking-card .meta-value{
+  font-weight: 700;
+}
+
+.manage-booking-actions{
+  display:flex;
+  gap: 1rem;
+}
+
+.manage-booking-actions .btn-wide{
+  flex: 1;
+}
+
 
 /* SEATS - Aircraft Layout with Plane Outline */
 .aircraft-layout{
@@ -1896,7 +2013,7 @@ cursor:pointer;
 </div>
 
 <!-- Top Right Corner - User Profile -->
-            <span onclick="showPage('profile')" style="cursor:pointer;font-size:1.8rem;transition:0.3s;" title="Profile">👤</span>
+            <span onclick="showPage('profile')" style="cursor:pointer;font-size:1.8rem;transition:0.3s;" title="Profile">ðŸ‘¤</span>
 
 </header>
 
@@ -1907,17 +2024,46 @@ cursor:pointer;
 
 <!-- Hero Section with Heading and Subheading -->
 <div class="hero">
-<h2 style="font-size:2.5rem;margin:0;text-shadow:0 2px 10px rgba(0,0,0,0.7);">Discover the Philippines</h2>
-<p style="font-size:1.2rem;margin:10px 0 20px 0;text-shadow:0 2px 10px rgba(0,0,0,0.7);">Book your next adventure with High-Rise Airlines</p>
+  <h2 style="font-size:2.5rem;margin:0;text-shadow:0 2px 10px rgba(0,0,0,0.7);">Discover the Philippines</h2>
+  <p style="font-size:1.2rem;margin:10px 0 20px 0;text-shadow:0 2px 10px rgba(0,0,0,0.7);">Book your next adventure with High-Rise Airlines</p>
 
-<!-- Search Box -->
-<div class="search-box" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-<input id="from" placeholder="From/To destination" style="flex:1;min-width:150px;">
-<input type="date" id="depart" placeholder="Depart" style="flex:1;min-width:120px;">
-<input type="date" id="return" placeholder="Return" style="flex:1;min-width:120px;">
-<input type="number" id="passengers" placeholder="Passenger" min="1" max="9" value="1" style="flex:1;min-width:80px;">
-<button onclick="searchFlight()" style="background:#0b3d2e;color:white;border:none;border-radius:8px;padding:12px 25px;cursor:pointer;font-weight:bold;">Search Flights</button>
-</div>
+  <!-- Search Widget (copied from highrisedemo.html; header/nav excluded) -->
+  <div class="search-widget" id="main-search-widget">
+    <div class="search-group">
+      <label>From</label>
+      <select id="search-origin">
+        <option value="MNL">Manila (MNL)</option>
+        <option value="CEB">Cebu (CEB)</option>
+        <option value="DVO">Davao (DVO)</option>
+      </select>
+    </div>
+
+    <div class="search-group">
+      <label>To</label>
+      <select id="search-dest">
+        <option value="CEB">Cebu (CEB)</option>
+        <option value="MNL">Manila (MNL)</option>
+        <option value="MPH">Boracay (MPH)</option>
+        <option value="ENI">Palawan (ENI)</option>
+      </select>
+    </div>
+
+    <div class="search-group">
+      <label>Depart</label>
+      <input type="date" id="search-date" value="2025-05-28">
+    </div>
+
+    <div class="search-group">
+      <label>Passengers</label>
+      <select id="search-pax">
+        <option value="1">1 Passenger</option>
+        <option value="2">2 Passengers</option>
+        <option value="3">3 Passengers</option>
+      </select>
+    </div>
+
+<button class="btn btn-primary" style="height: 48px; min-width: 140px;" onclick="searchFlightsBridge()">Search Flights</button>
+  </div>
 </div>
 
 <!-- Featured Destinations -->
@@ -2117,7 +2263,7 @@ cursor:pointer;
         When can I check in online? <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        Online check-in usually opens 24–48 hours before departure.
+        Online check-in usually opens 24â€“48 hours before departure.
       </div>
     </div>
     <div class="faq-item">
@@ -2221,7 +2367,7 @@ cursor:pointer;
         How early should I arrive at the airport? <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        We recommend arriving at least 2–3 hours before departure for international flights.
+        We recommend arriving at least 2â€“3 hours before departure for international flights.
       </div>
     </div>
     <div class="faq-item">
@@ -2247,7 +2393,7 @@ cursor:pointer;
 <div class="card" style="max-width:500px;margin:auto;">
 <h3>User Profile</h3>
 <div style="text-align:center;margin:20px 0;">
-<span style="font-size:4rem;">👤</span>
+<span style="font-size:4rem;">ðŸ‘¤</span>
 </div>
 <div class="form-group">
 <label>Full Name</label>
@@ -2277,73 +2423,73 @@ cursor:pointer;
 <tr style="background:#0b3d2e;">
 <th>Destination</th>
 <th>Schedule</th>
-<th>Price (₱)</th>
+<th>Price (â‚±)</th>
 <th>Type</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody id="flightsTable">
 <tr>
-<td>Manila → Cebu</td>
+<td>Manila â†’ Cebu</td>
 <td>08:00 AM - 09:30 AM</td>
-<td>₱3,500</td>
+<td>â‚±3,500</td>
 <td>Economy</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Cebu', '₱3,500', 'Economy')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Cebu', 'â‚±3,500', 'Economy')">Select</button></td>
 </tr>
 <tr>
-<td>Manila → Cebu</td>
+<td>Manila â†’ Cebu</td>
 <td>02:00 PM - 03:30 PM</td>
-<td>₱4,200</td>
+<td>â‚±4,200</td>
 <td>First Class</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Cebu', '₱4,200', 'First Class')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Cebu', 'â‚±4,200', 'First Class')">Select</button></td>
 </tr>
 <tr>
-<td>Manila → Boracay</td>
+<td>Manila â†’ Boracay</td>
 <td>10:00 AM - 11:00 AM</td>
-<td>₱4,200</td>
+<td>â‚±4,200</td>
 <td>Economy</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Boracay', '₱4,200', 'Economy')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Boracay', 'â‚±4,200', 'Economy')">Select</button></td>
 </tr>
 <tr>
-<td>Manila → Boracay</td>
+<td>Manila â†’ Boracay</td>
 <td>01:00 PM - 02:00 PM</td>
-<td>₱5,500</td>
+<td>â‚±5,500</td>
 <td>First Class</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Boracay', '₱5,500', 'First Class')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Boracay', 'â‚±5,500', 'First Class')">Select</button></td>
 </tr>
 <tr>
-<td>Cebu → Manila</td>
+<td>Cebu â†’ Manila</td>
 <td>09:00 AM - 10:30 AM</td>
-<td>₱3,200</td>
+<td>â‚±3,200</td>
 <td>Economy</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Cebu → Manila', '₱3,200', 'Economy')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Cebu â†’ Manila', 'â‚±3,200', 'Economy')">Select</button></td>
 </tr>
 <tr>
-<td>Cebu → Manila</td>
+<td>Cebu â†’ Manila</td>
 <td>03:00 PM - 04:30 PM</td>
-<td>₱4,000</td>
+<td>â‚±4,000</td>
 <td>First Class</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Cebu → Manila', '₱4,000', 'First Class')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Cebu â†’ Manila', 'â‚±4,000', 'First Class')">Select</button></td>
 </tr>
 <tr>
-<td>Manila → Palawan</td>
+<td>Manila â†’ Palawan</td>
 <td>07:00 AM - 08:45 AM</td>
-<td>₱4,800</td>
+<td>â‚±4,800</td>
 <td>Economy</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Palawan', '₱4,800', 'Economy')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Palawan', 'â‚±4,800', 'Economy')">Select</button></td>
 </tr>
 <tr>
-<td>Manila → Laoag</td>
+<td>Manila â†’ Laoag</td>
 <td>06:00 AM - 07:15 AM</td>
-<td>₱3,800</td>
+<td>â‚±3,800</td>
 <td>Economy</td>
-<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila → Laoag', '₱3,800', 'Economy')">Select</button></td>
+<td><button class="action-btn view-btn" onclick="selectThisFlight('Manila â†’ Laoag', 'â‚±3,800', 'Economy')">Select</button></td>
 </tr>
 </tbody>
 </table>
 </div>
 
-<div class="back" onclick="showPage('book')" style="margin-top:20px;display:inline-block;cursor:pointer;color:#b8a200;">← Back to Main Page</div>
+<div class="back" onclick="showPage('book')" style="margin-top:20px;display:inline-block;cursor:pointer;color:#b8a200;">â† Back to Main Page</div>
 </div>
 </div>
 
@@ -2362,15 +2508,15 @@ cursor:pointer;
 <p>High-Rise Airlines</p>
 </div>
 <ul class="admin-menu">
-<li><a onclick="showAdminSection('dashboard')" class="active" id="menu-dashboard"><span class="menu-icon">📊</span> Dashboard</a></li>
-<li><a onclick="showAdminSection('flights')" id="menu-flights"><span class="menu-icon">✈️</span> Flight Management</a></li>
-<li><a onclick="showAdminSection('bookings')" id="menu-bookings"><span class="menu-icon">🎫</span> Bookings</a></li>
-<li><a onclick="showAdminSection('payments')" id="menu-payments"><span class="menu-icon">💳</span> Payments</a></li>
-<li><a onclick="showAdminSection('refunds')" id="menu-refunds"><span class="menu-icon">💰</span> Refund Requests</a></li>
-<li><a onclick="showAdminSection('customers')" id="menu-customers"><span class="menu-icon">👥</span> Customers</a></li>
-<li><a onclick="showAdminSection('reports')" id="menu-reports"><span class="menu-icon">📈</span> Reports</a></li>
-<li><a onclick="showAdminSection('settings')" id="menu-settings"><span class="menu-icon">⚙️</span> Settings</a></li>
-<li><a onclick="logout()"><span class="menu-icon">🚪</span> Logout</a></li>
+<li><a onclick="showAdminSection('dashboard')" class="active" id="menu-dashboard"><span class="menu-icon">ðŸ“Š</span> Dashboard</a></li>
+<li><a onclick="showAdminSection('flights')" id="menu-flights"><span class="menu-icon">âœˆï¸</span> Flight Management</a></li>
+<li><a onclick="showAdminSection('bookings')" id="menu-bookings"><span class="menu-icon">ðŸŽ«</span> Bookings</a></li>
+<li><a onclick="showAdminSection('payments')" id="menu-payments"><span class="menu-icon">ðŸ’³</span> Payments</a></li>
+<li><a onclick="showAdminSection('refunds')" id="menu-refunds"><span class="menu-icon">ðŸ’°</span> Refund Requests</a></li>
+<li><a onclick="showAdminSection('customers')" id="menu-customers"><span class="menu-icon">ðŸ‘¥</span> Customers</a></li>
+<li><a onclick="showAdminSection('reports')" id="menu-reports"><span class="menu-icon">ðŸ“ˆ</span> Reports</a></li>
+<li><a onclick="showAdminSection('settings')" id="menu-settings"><span class="menu-icon">âš™ï¸</span> Settings</a></li>
+<li><a onclick="logout()"><span class="menu-icon">ðŸšª</span> Logout</a></li>
 </ul>
 </div>
 
@@ -2403,7 +2549,7 @@ cursor:pointer;
 </div>
 <div class="stat-card">
 <h3>Total Revenue</h3>
-<div class="stat-number" id="stat-revenue">₱428,500</div>
+<div class="stat-number" id="stat-revenue">â‚±428,500</div>
 <div class="stat-label">This Month</div>
 </div>
 </div>
@@ -2470,7 +2616,7 @@ cursor:pointer;
 <tbody>
 <tr>
 <td>HR-101</td>
-<td>Manila → Cebu</td>
+<td>Manila â†’ Cebu</td>
 <td>08:00</td>
 <td>09:30</td>
 <td>28/36</td>
@@ -2478,7 +2624,7 @@ cursor:pointer;
 </tr>
 <tr>
 <td>HR-102</td>
-<td>Manila → Boracay</td>
+<td>Manila â†’ Boracay</td>
 <td>10:00</td>
 <td>11:00</td>
 <td>15/36</td>
@@ -2486,7 +2632,7 @@ cursor:pointer;
 </tr>
 <tr>
 <td>HR-103</td>
-<td>Cebu → Manila</td>
+<td>Cebu â†’ Manila</td>
 <td>12:00</td>
 <td>13:30</td>
 <td>36/36</td>
@@ -2510,9 +2656,9 @@ cursor:pointer;
 <input type="text" placeholder="Search flights..." id="flight-search">
 <select id="flight-route-filter">
 <option>All Routes</option>
-<option>Manila → Cebu</option>
-<option>Manila → Boracay</option>
-<option>Cebu → Manila</option>
+<option>Manila â†’ Cebu</option>
+<option>Manila â†’ Boracay</option>
+<option>Cebu â†’ Manila</option>
 </select>
 <button onclick="addFlight()">+ Add Flight</button>
 </div>
@@ -2523,7 +2669,7 @@ cursor:pointer;
 <th>Route</th>
 <th>Departure</th>
 <th>Arrival</th>
-<th>Price (₱)</th>
+<th>Price (â‚±)</th>
 <th>Seats</th>
 <th>Status</th>
 <th>Actions</th>
@@ -2532,7 +2678,7 @@ cursor:pointer;
 <tbody id="flights-table">
 <tr>
 <td>HR-101</td>
-<td>Manila → Cebu</td>
+<td>Manila â†’ Cebu</td>
 <td>08:00</td>
 <td>09:30</td>
 <td>3,500</td>
@@ -2545,7 +2691,7 @@ cursor:pointer;
 </tr>
 <tr>
 <td>HR-102</td>
-<td>Manila → Boracay</td>
+<td>Manila â†’ Boracay</td>
 <td>10:00</td>
 <td>11:00</td>
 <td>4,200</td>
@@ -2597,7 +2743,7 @@ cursor:pointer;
 <td>HR-101</td>
 <td>12A</td>
 <td>2024-01-15</td>
-<td>₱3,500</td>
+<td>â‚±3,500</td>
 <td><span class="status-badge status-confirmed">Confirmed</span></td>
 <td>
 <button class="action-btn view-btn">View</button>
@@ -2610,7 +2756,7 @@ cursor:pointer;
 <td>HR-203</td>
 <td>15B</td>
 <td>2024-01-14</td>
-<td>₱4,200</td>
+<td>â‚±4,200</td>
 <td><span class="status-badge status-pending">Pending</span></td>
 <td>
 <button class="action-btn view-btn">View</button>
@@ -2655,7 +2801,7 @@ cursor:pointer;
 <td>PAY-001</td>
 <td>BK-001</td>
 <td>John Doe</td>
-<td>₱3,500</td>
+<td>â‚±3,500</td>
 <td>GCash</td>
 <td>2024-01-15</td>
 <td><span class="status-badge status-confirmed">Completed</span></td>
@@ -2664,7 +2810,7 @@ cursor:pointer;
 <td>PAY-002</td>
 <td>BK-002</td>
 <td>Jane Smith</td>
-<td>₱4,200</td>
+<td>â‚±4,200</td>
 <td>PayPal</td>
 <td>2024-01-14</td>
 <td><span class="status-badge status-confirmed">Completed</span></td>
@@ -2673,7 +2819,7 @@ cursor:pointer;
 <td>PAY-003</td>
 <td>BK-004</td>
 <td>Sara Lee</td>
-<td>₱3,800</td>
+<td>â‚±3,800</td>
 <td>Bank</td>
 <td>2024-01-13</td>
 <td><span class="status-badge status-cancelled">Refunded</span></td>
@@ -2707,7 +2853,7 @@ cursor:pointer;
 <td>REF-001</td>
 <td>BK-004</td>
 <td>Sara Lee</td>
-<td>₱3,800</td>
+<td>â‚±3,800</td>
 <td>Change of plans</td>
 <td>2024-01-13</td>
 <td><span class="status-badge status-pending">Pending</span></td>
@@ -2720,7 +2866,7 @@ cursor:pointer;
 <td>REF-002</td>
 <td>BK-007</td>
 <td>Tom Harris</td>
-<td>₱2,500</td>
+<td>â‚±2,500</td>
 <td>Flight cancelled</td>
 <td>2024-01-10</td>
 <td><span class="status-badge status-confirmed">Approved</span></td>
@@ -2811,7 +2957,7 @@ cursor:pointer;
 <div class="admin-stats">
 <div class="stat-card">
 <h3>Total Revenue</h3>
-<div class="stat-number">₱428,500</div>
+<div class="stat-number">â‚±428,500</div>
 <div class="stat-label">This Month</div>
 </div>
 <div class="stat-card">
@@ -2821,7 +2967,7 @@ cursor:pointer;
 </div>
 <div class="stat-card">
 <h3>Avg. Ticket Price</h3>
-<div class="stat-number">₱2,746</div>
+<div class="stat-number">â‚±2,746</div>
 <div class="stat-label">Per Booking</div>
 </div>
 </div>
@@ -2840,19 +2986,19 @@ cursor:pointer;
 </thead>
 <tbody>
 <tr>
-<td>Manila → Cebu</td>
+<td>Manila â†’ Cebu</td>
 <td>65</td>
-<td>₱227,500</td>
+<td>â‚±227,500</td>
 </tr>
 <tr>
-<td>Manila → Boracay</td>
+<td>Manila â†’ Boracay</td>
 <td>52</td>
-<td>₱118,400</td>
+<td>â‚±118,400</td>
 </tr>
 <tr>
-<td>Cebu → Manila</td>
+<td>Cebu â†’ Manila</td>
 <td>39</td>
-<td>₱82,600</td>
+<td>â‚±82,600</td>
 </tr>
 </tbody>
 </table>
@@ -2872,17 +3018,17 @@ cursor:pointer;
 <tr>
 <td>GCash</td>
 <td>89</td>
-<td>₱245,800</td>
+<td>â‚±245,800</td>
 </tr>
 <tr>
 <td>PayPal</td>
 <td>42</td>
-<td>₱112,200</td>
+<td>â‚±112,200</td>
 </tr>
 <tr>
 <td>Bank Transfer</td>
 <td>25</td>
-<td>₱70,500</td>
+<td>â‚±70,500</td>
 </tr>
 </tbody>
 </table>
@@ -2936,7 +3082,7 @@ cursor:pointer;
 </div>
 <!-- Back button below logo -->
 <div style="text-align:left;margin-bottom:20px;">
-<span class="back" onclick="showPage('book')" style="font-size:1.1rem;">← Back</span>
+<span class="back" onclick="showPage('book')" style="font-size:1.1rem;">â† Back</span>
 </div>
 
 <h3 id="seatTitle">Select Seat (0/1)</h3>
@@ -3034,7 +3180,7 @@ cursor:pointer;
   <option value="Visa/Mastercard">8. Visa/Mastercard</option>
 </select>
 <button class="login-btn" onclick="confirmPayment()" style="width:100%;padding:14px;font-size:1.1rem;">Confirm Payment</button>
-<div class="back" onclick="goBack()" style="margin-top:15px;">← Back</div>
+<div class="back" onclick="goBack()" style="margin-top:15px;">â† Back</div>
 </div>
 
 <!-- RECEIPT -->
@@ -3098,14 +3244,14 @@ cursor:pointer;
             <h2 class="lb-title-dest" id="lbTitle">Destination</h2>
             <p class="lb-desc-dest" id="lbDesc"></p>
           </div>
-          <button class="lb-close-x-dest" id="lbClose" aria-label="Close">✕</button>
+          <button class="lb-close-x-dest" id="lbClose" aria-label="Close">âœ•</button>
         </div>
 
         <div class="lb-meta-dest" id="lbMeta"></div>
 
         <div class="lb-actions-dest">
-          <button class="lb-btn-dest lb-btn-primary-dest" id="lbBookBtn" type="button">📅 Book Now</button>
-          <button class="lb-btn-dest lb-btn-secondary-dest" id="lbViewMoreBtn" type="button">🧭 View More</button>
+          <button class="lb-btn-dest lb-btn-primary-dest" id="lbBookBtn" type="button">ðŸ“… Book Now</button>
+          <button class="lb-btn-dest lb-btn-secondary-dest" id="lbViewMoreBtn" type="button">ðŸ§­ View More</button>
           <button class="lb-btn-dest lb-btn-ghost-dest" id="lbCloseBtn2" type="button">Close</button>
         </div>
       </div>
@@ -3121,61 +3267,61 @@ function initMockBookings() {
     bookings = [
       {
         id: 'BK001',
-        route: 'Manila → Cebu',
+        route: 'Manila â†’ Cebu',
         date: '2024-02-15',
         time: '08:00 AM - 09:30 AM',
         seat: '12A',
-        price: '₱3,500',
+        price: 'â‚±3,500',
         status: 'upcoming',
         details: 'Economy class, confirmed paid flight.'
       },
       {
         id: 'BK002',
-        route: 'Manila → Boracay',
+        route: 'Manila â†’ Boracay',
         date: '2024-02-20',
         time: '10:00 AM - 11:00 AM',
         seat: '5B',
-        price: '₱4,200',
+        price: 'â‚±4,200',
         status: 'pending',
         details: 'Pending payment for economy seat.'
       },
       {
         id: 'BK003',
-        route: 'Cebu → Manila',
+        route: 'Cebu â†’ Manila',
         date: '2024-01-25',
         time: '03:00 PM - 04:30 PM',
         seat: '8E',
-        price: '₱4,000',
+        price: 'â‚±4,000',
         status: 'cancelled',
         details: 'Flight cancelled by user.'
       },
       {
         id: 'BK004',
-        route: 'Manila → Palawan',
+        route: 'Manila â†’ Palawan',
         date: '2024-01-30',
         time: '07:00 AM - 08:45 AM',
         seat: '3F',
-        price: '₱4,800',
+        price: 'â‚±4,800',
         status: 'refunded',
         details: 'Refund processed, amount returned.'
       },
       {
         id: 'BK005',
-        route: 'Manila → Cebu',
+        route: 'Manila â†’ Cebu',
         date: '2024-02-10',
         time: '02:00 PM - 03:30 PM',
         seat: '15C',
-        price: '₱4,200',
+        price: 'â‚±4,200',
         status: 'upcoming',
         details: 'First class, confirmed and paid.'
       },
       {
         id: 'BK006',
-        route: 'Manila → Laoag',
+        route: 'Manila â†’ Laoag',
         date: '2024-02-05',
         time: '06:00 AM - 07:15 AM',
         seat: '10D',
-        price: '₱3,800',
+        price: 'â‚±3,800',
         status: 'pending',
         details: 'Economy, awaiting payment.'
       }
@@ -3383,6 +3529,29 @@ function searchFlight(){
 showPage('selectFlights');
 }
 
+// Bridge for demo widget's button (searchFlights) -> existing page flow
+function searchFlightsBridge(){
+  // Populate legacy ids used by the rest of this page logic
+  const fromEl = document.getElementById('search-origin');
+  const toEl = document.getElementById('search-dest');
+  const dateEl = document.getElementById('search-date');
+  const paxEl = document.getElementById('search-pax');
+
+  const fromLegacy = document.getElementById('from');
+  const departLegacy = document.getElementById('depart');
+  const returnLegacy = document.getElementById('return');
+  const paxLegacy = document.getElementById('passengers');
+
+  if (fromLegacy && fromEl) fromLegacy.value = fromEl.options[fromEl.selectedIndex]?.text || '';
+  if (departLegacy && dateEl) departLegacy.value = dateEl.value;
+  if (returnLegacy && dateEl) returnLegacy.value = dateEl.value; // keep simple for demo
+  if (paxLegacy && paxEl) paxLegacy.value = paxEl.value;
+
+  // Keep current behavior: go to flights list
+  searchFlight();
+}
+
+
 // ==========================
 // Destination Lightbox (Fullscreen)
 // ==========================
@@ -3392,7 +3561,7 @@ const destinations = {
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80',
     description: 'Famous for its powdery White Beach, Boracay offers crystal clear waters and vibrant nightlife.',
     meta: {
-      'Price': 'from ₱4,200',
+      'Price': 'from â‚±4,200',
       'Location': 'Malay, Aklan, Philippines',
       'Category': 'Beach & Island Escape',
       'Aircraft': 'A320neo (Demo)',
@@ -3401,10 +3570,10 @@ const destinations = {
   },
   Cebu: {
     title: 'Cebu',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
-    description: 'The Queen City of the South—history, adventure, and unforgettable local food.',
+    image: 'https://pin.it/1zgfd8tHi',
+    description: 'The Queen City of the Southâ€”history, adventure, and unforgettable local food.',
     meta: {
-      'Price': 'from ₱3,500',
+      'Price': 'from â‚±3,500',
       'Location': 'Cebu City & Beyond',
       'Category': 'City + Adventure',
       'Aircraft': 'A321ceo (Demo)',
@@ -3414,9 +3583,9 @@ const destinations = {
   Manila: {
     title: 'Manila',
     image: 'https://images.unsplash.com/photo-1546484959-fba8f1c2d5f6?auto=format&fit=crop&w=1600&q=80',
-    description: "A blend of heritage and modern life—discover Intramuros, Rizal Park, and more.",
+    description: "A blend of heritage and modern lifeâ€”discover Intramuros, Rizal Park, and more.",
     meta: {
-      'Price': 'from ₱2,800',
+      'Price': 'from â‚±2,800',
       'Location': 'Metro Manila, Philippines',
       'Category': 'Heritage & Urban',
       'Aircraft': 'B737 MAX (Demo)',
@@ -3426,9 +3595,9 @@ const destinations = {
   Palawan: {
     title: 'Palawan',
     image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
-    description: 'Last Ecological Frontier—limestone cliffs, underground rivers, and reef adventures.',
+    description: 'Last Ecological Frontierâ€”limestone cliffs, underground rivers, and reef adventures.',
     meta: {
-      'Price': 'from ₱5,900',
+      'Price': 'from â‚±5,900',
       'Location': 'Puerto Princesa & Beyond',
       'Category': 'Nature & Diving',
       'Aircraft': 'A320neo (Demo)',
@@ -3440,7 +3609,7 @@ const destinations = {
     image: 'https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=1600&q=80',
     description: 'Paoay Sand Dunes, historic churches, and wide-open Ilocos views.',
     meta: {
-      'Price': 'from ₱3,800',
+      'Price': 'from â‚±3,800',
       'Location': 'Ilocos Norte, Philippines',
       'Category': 'Culture & Landscapes',
       'Aircraft': 'A321ceo (Demo)',
@@ -3742,11 +3911,11 @@ function confirmPayment(){
   // Save to bookings
   const newBooking = {
     id: 'BK' + Date.now(),
-    route: window.currentFlight || 'Manila → Cebu',
+    route: window.currentFlight || 'Manila â†’ Cebu',
     date: document.getElementById('depart')?.value || '2024-02-15',
     passengers: window.currentBooking.maxSeats,
     seats: seats,
-    price: '₱3,500', // From selected flight
+    price: 'â‚±3,500', // From selected flight
     status: 'upcoming',
     details: `Economy class, ${seats} seats confirmed.`
   };
@@ -3851,17 +4020,38 @@ function renderBookingList(bookings) {
       `;
     } else {
       actions = `
-        <button class="action-btn view-btn" onclick="viewDetails('${book.id}')">View Details</button>
+        <button class="action-btn view-btn" onclick="viewDetails('${booking.id}')">View Details</button>
       `;
+
     }
     
+    const thumbSrc = 'https://images.unsplash.com/photo-1584988448566-b258dc78c2e9?q=80&w=400&auto=format&fit=crop';
+    card.classList.add('manage-booking-card');
     card.innerHTML = `
-      <h4>${booking.route} <span class="status-badge ${statusClass}">${booking.status.toUpperCase()}</span></h4>
-      <p><strong>Date:</strong> ${booking.date} | <strong>Time:</strong> ${booking.time}</p>
-      <p><strong>Seat:</strong> ${booking.seat} | <strong>Price:</strong> ${booking.price}</p>
-      <p>${booking.details}</p>
-      <div style="margin-top:10px;">${actions}</div>
+      <img class="booking-thumb" src="${thumbSrc}" alt="Booking">
+      <div style="flex:1; min-width: 220px;">
+        <div class="booking-title">${booking.route}</div>
+        <div class="booking-sub">${booking.date} | ${booking.time} | ${booking.id}</div>
+
+        <div class="booking-meta-grid">
+          <div class="meta-block">
+            <div class="meta-label">Seat</div>
+            <div class="meta-value">${booking.seat}</div>
+          </div>
+          <div class="meta-block">
+            <div class="meta-label">Status</div>
+            <div class="meta-value"><span class="status-badge ${statusClass}">${booking.status.toUpperCase()}</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.85rem; color: rgba(255,255,255,0.86); font-size: 0.95rem; line-height: 1.45;">${booking.details}</div>
+
+        <div style="margin-top: 1.25rem; display:flex; gap: 1rem; flex-wrap: wrap;">
+          ${actions}
+        </div>
+      </div>
     `;
+
     container.appendChild(card);
   });
 }
@@ -3913,4 +4103,3 @@ function viewDetails(id) {
 
 </body>
 </html>
-
